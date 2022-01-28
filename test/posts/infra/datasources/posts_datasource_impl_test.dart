@@ -1,0 +1,38 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:wall_app_frontend/posts/data/datasources/posts_datasource.dart';
+import 'package:wall_app_frontend/posts/data/models/post_response_model.dart';
+import 'package:wall_app_frontend/posts/infra/datasources/posts_datasource_impl.dart';
+
+import 'mocks/posts_datasource_mocks.dart';
+
+class DioMock extends Mock implements Dio {}
+
+void main() {
+  late Dio _dio;
+  late PostsDatasource _datasource;
+
+  setUpAll(() {
+    _dio = DioMock();
+    _datasource = PostsDatasourceImpl(_dio);
+  });
+  test('''
+    Given a valid call to method loadAll,
+    When dio returns a status code 200 with content,
+    Then should return a list of posts
+  ''', () async {
+    when(() => _dio.get(any())).thenAnswer(
+      (_) async => Response(
+        statusCode: 200,
+        requestOptions: RequestOptions(path: ''),
+        data: json.decode(PostsDatasourceMocks.postListMock),
+      ),
+    );
+
+    final result = await _datasource.loadAll();
+    expect(result, isA<List<PostResponseModel>>());
+  });
+}
