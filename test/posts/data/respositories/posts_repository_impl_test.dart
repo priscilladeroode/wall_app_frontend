@@ -48,4 +48,16 @@ void main() {
 
     expect(result.fold(id, id), isA<PostsRepositoryFailure>());
   });
+
+  test('''
+    Given a valid call for the method loadAll,
+    When datasource throws failure,
+    Then a failure should be returned.
+  ''', () async {
+    when(() => datasource.loadAll()).thenThrow(() async => PostsDatasourceError());
+
+    final result = await repository.loadAll();
+
+    expect(result.fold(id, id), isA<PostsFailures>());
+  });
 }
