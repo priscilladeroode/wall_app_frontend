@@ -1,5 +1,5 @@
 import '../../../commons/mapper.dart';
-import '../../domain/entities/post_entity.dart';
+import '../../domain/entities/post_response_entity.dart';
 import '../models/post_response_model.dart';
 
 class PostMapper extends Mapper<PostResponseEntity, PostResponseModel> {

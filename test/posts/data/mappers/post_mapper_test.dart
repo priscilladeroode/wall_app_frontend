@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wall_app_frontend/posts/data/mappers/post_mapper.dart';
-import 'package:wall_app_frontend/posts/domain/entities/post_entity.dart';
+import 'package:wall_app_frontend/posts/domain/entities/post_response_entity.dart';
 
 import '../respositories/mocks/posts_repository_mocks.dart';
 
