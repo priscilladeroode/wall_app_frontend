@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'wall_ui.dart/themes/wall_themes.dart';
 
 class AppWidget extends StatelessWidget {
@@ -10,6 +11,6 @@ class AppWidget extends StatelessWidget {
       title: 'Wall App',
       theme: WallThemes.light,
       darkTheme: WallThemes.dark,
-    );
+    ).modular();
   }
 }
