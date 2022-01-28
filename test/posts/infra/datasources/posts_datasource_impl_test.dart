@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/posts/data/datasources/posts_datasource.dart';
 import 'package:wall_app_frontend/posts/data/models/post_response_model.dart';
+import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
 import 'package:wall_app_frontend/posts/infra/datasources/posts_datasource_impl.dart';
 
 import 'mocks/posts_datasource_mocks.dart';
@@ -29,6 +30,23 @@ void main() {
         statusCode: 200,
         requestOptions: RequestOptions(path: ''),
         data: json.decode(PostsDatasourceMocks.postListMock),
+      ),
+    );
+
+    final result = await _datasource.loadAll();
+    expect(result, isA<List<PostResponseModel>>());
+  });
+
+  test('''
+    Given a valid call to method loadAll,
+    When dio returns a status code 200 with an empty list,
+    Then should return an empty list of posts
+  ''', () async {
+    when(() => _dio.get(any())).thenAnswer(
+      (_) async => Response(
+        statusCode: 200,
+        requestOptions: RequestOptions(path: ''),
+        data: json.decode('[]'),
       ),
     );
 
