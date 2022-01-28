@@ -70,4 +70,15 @@ void main() {
     final result = _datasource.loadAll();
     expect(result, throwsA(isA<PostsDatasourceError>()));
   });
+
+  test('''
+    Given a valid call to method loadAll,
+    When dio throws,
+    Then should throw.
+  ''', () async {
+    when(() => _dio.get(any())).thenThrow(Exception());
+
+    final result = _datasource.loadAll();
+    expect(result, throwsA(isA<Exception>()));
+  });
 }
