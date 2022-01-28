@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/commons/either.dart';
+import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
 import 'package:wall_app_frontend/posts/domain/usecases/get_all_posts_usecase.dart';
 import 'package:wall_app_frontend/posts/presentation/home_page/home_page_controller.dart';
 import 'package:wall_app_frontend/posts/presentation/home_page/stores/home_page_store.dart';
@@ -33,5 +34,19 @@ void main() {
     verify(() => _store.setPosts = any()).called(1);
     verify(() => _store.setLoading = any()).called(2);
     verifyNever(() => _store.error = any());
+  });
+
+  test('''
+    Given a valid call to method getAll,
+    When usecase returns a failure,
+    Then an error should be set in store.
+  ''', () async {
+    when(() => _usecase.loadAll()).thenAnswer((_) async => left(PostsRepositoryFailure()));
+
+    await _controller.getAll();
+
+    verify(() => _store.error = any()).called(1);
+    verify(() => _store.setLoading = any()).called(2);
+    verifyNever(() => _store.setPosts = any());
   });
 }
