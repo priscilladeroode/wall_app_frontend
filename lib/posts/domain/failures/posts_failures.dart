@@ -8,3 +8,10 @@ class PostsDatasourceError extends PostsFailures {
 
   PostsDatasourceError({this.message});
 }
+
+class PostsRepositoryFailure extends PostsFailures {
+  @override
+  final String? message;
+
+  PostsRepositoryFailure({this.message});
+}
