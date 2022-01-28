@@ -29,7 +29,7 @@ void main() {
       (_) async => Response(
         statusCode: 200,
         requestOptions: RequestOptions(path: ''),
-        data: json.decode(PostsDatasourceMocks.postListMock),
+        data: json.decode(postListMock),
       ),
     );
 

@@ -1,13 +1,12 @@
 import 'package:faker/faker.dart';
 
-class PostsDatasourceMocks {
-  static final _id = faker.lorem.word();
-  static final _title = faker.lorem.sentence();
-  static final _content = faker.lorem.sentences(2);
-  static final _createdBy = faker.person.name();
-  static final _createdAt = faker.date.dateTime();
+final _id = faker.lorem.word();
+final _title = faker.lorem.sentence();
+final _content = faker.lorem.sentences(2);
+final _createdBy = faker.person.name();
+final _createdAt = faker.date.dateTime();
 
-  static final postListMock = '''
+final postListMock = '''
           [
             {
              "id": "$_id",
@@ -18,4 +17,3 @@ class PostsDatasourceMocks {
             }
           ]
         ''';
-}
