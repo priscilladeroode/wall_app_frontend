@@ -15,26 +15,13 @@ class WallTypography {
   static TextStyle caption =
       GoogleFonts.openSans(fontSize: 12, height: 1.6, fontWeight: FontWeight.w600);
 
-  static TextStyle elevatedButton = GoogleFonts.openSans(
-      fontSize: 16, height: 1.5, fontWeight: FontWeight.w600, letterSpacing: 1.5);
+  static TextStyle elevatedButton =
+      GoogleFonts.openSans(fontSize: 16, height: 1.5, fontWeight: FontWeight.w600);
 
   static TextStyle textButton = GoogleFonts.openSans(
-      fontSize: 16,
-      height: 1.5,
-      fontWeight: FontWeight.w600,
-      decoration: TextDecoration.underline,
-      letterSpacing: 1.3);
-
-  final textTheme = TextTheme(
-    headline1: h1,
-    headline2: h2,
-    headline3: h3,
-    headline4: h4,
-    headline5: h5,
-    headline6: h6,
-    bodyText1: bodyLarge,
-    bodyText2: bodySmall,
-    caption: caption,
-    button: elevatedButton,
+    fontSize: 16,
+    height: 1.5,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.underline,
   );
 }
