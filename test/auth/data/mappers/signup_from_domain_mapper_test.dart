@@ -11,7 +11,7 @@ void main() {
     When PostMapper is called,
     Then should return a SignUpRequestModel.
   ''', () async {
-    final result = mapper.handle(signUpEntity);
+    final result = mapper.handle(signUpRequestEntity);
     expect(result, isA<SignUpRequestModel>());
   });
 }
