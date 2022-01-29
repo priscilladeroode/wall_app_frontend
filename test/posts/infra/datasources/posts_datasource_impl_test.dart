@@ -20,65 +20,87 @@ void main() {
     _dio = DioMock();
     _datasource = PostsDatasourceImpl(_dio);
   });
-  test('''
+
+  group('loadAll', () {
+    test('''
     Given a valid call to method loadAll,
     When dio returns a status code 200 with content,
     Then should return a list of posts
   ''', () async {
-    when(() => _dio.get(any())).thenAnswer(
-      (_) async => Response(
-        statusCode: 200,
-        requestOptions: RequestOptions(path: ''),
-        data: json.decode(postListMock),
-      ),
-    );
+      when(() => _dio.get(any())).thenAnswer(
+        (_) async => Response(
+          statusCode: 200,
+          requestOptions: RequestOptions(path: ''),
+          data: json.decode(postListJsonMock),
+        ),
+      );
 
-    final result = await _datasource.loadAll();
-    expect(result, isA<List<PostResponseModel>>());
-  });
+      final result = await _datasource.loadAll();
+      expect(result, isA<List<PostResponseModel>>());
+    });
 
-  test('''
+    test('''
     Given a valid call to method loadAll,
     When dio returns a status code 200 with an empty list,
     Then should return an empty list of posts
   ''', () async {
-    when(() => _dio.get(any())).thenAnswer(
-      (_) async => Response(
-        statusCode: 200,
-        requestOptions: RequestOptions(path: ''),
-        data: json.decode('[]'),
-      ),
-    );
+      when(() => _dio.get(any())).thenAnswer(
+        (_) async => Response(
+          statusCode: 200,
+          requestOptions: RequestOptions(path: ''),
+          data: json.decode('[]'),
+        ),
+      );
 
-    final result = await _datasource.loadAll();
-    expect(result, isA<List<PostResponseModel>>());
-  });
+      final result = await _datasource.loadAll();
+      expect(result, isA<List<PostResponseModel>>());
+    });
 
-  test('''
+    test('''
     Given a valid call to method loadAll,
     When dio returns a status code different then 200,
     Then should throw an PostsDatasourceError
   ''', () async {
-    when(() => _dio.get(any())).thenAnswer(
-      (_) async => Response(
-        statusCode: 400,
-        requestOptions: RequestOptions(path: ''),
-        data: json.decode('[]'),
-      ),
-    );
+      when(() => _dio.get(any())).thenAnswer(
+        (_) async => Response(
+          statusCode: 400,
+          requestOptions: RequestOptions(path: ''),
+          data: json.decode('[]'),
+        ),
+      );
 
-    final result = _datasource.loadAll();
-    expect(result, throwsA(isA<PostsDatasourceError>()));
-  });
+      final result = _datasource.loadAll();
+      expect(result, throwsA(isA<PostsDatasourceError>()));
+    });
 
-  test('''
+    test('''
     Given a valid call to method loadAll,
     When dio throws,
     Then should throw.
   ''', () async {
-    when(() => _dio.get(any())).thenThrow(Exception());
+      when(() => _dio.get(any())).thenThrow(Exception());
 
-    final result = _datasource.loadAll();
-    expect(result, throwsA(isA<Exception>()));
+      final result = _datasource.loadAll();
+      expect(result, throwsA(isA<Exception>()));
+    });
+  });
+
+  group('loadById', () {
+    test('''
+    Given a valid call to method loadById,
+    When dio returns a status code 200 with content,
+    Then should return a posts
+  ''', () async {
+      when(() => _dio.get(any())).thenAnswer(
+        (_) async => Response(
+          statusCode: 200,
+          requestOptions: RequestOptions(path: ''),
+          data: json.decode(postJsonMock),
+        ),
+      );
+
+      final result = await _datasource.loadById('');
+      expect(result, isA<PostResponseModel>());
+    });
   });
 }
