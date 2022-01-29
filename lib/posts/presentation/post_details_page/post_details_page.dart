@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
+
 import '../../../commons/breakpoints.dart';
 import '../../../wall_ui.dart/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui.dart/components/wall_error_widget.dart';
 import 'post_details_page_controller.dart';
 
 class PostDetailsPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class PostDetailsPage extends StatefulWidget {
 
 class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPageController> {
   late Breakpoint breakpoint;
+  late ThemeData theme;
 
   @override
   void initState() {
@@ -24,8 +27,9 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     breakpoint = Breakpoint.fromMediaQuery(context);
+    theme = Theme.of(context);
     super.didChangeDependencies();
   }
 
@@ -39,66 +43,71 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
         child: Observer(
           builder: (context) {
             return controller.store.loading
-                ? const Center(child: CircularProgressIndicator())
-                : Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: breakpoint.screenWidth * 0.15,
-                          right: breakpoint.screenWidth * 0.15,
-                          top: 70,
-                          bottom: 16,
+                ? SizedBox(
+                    height: breakpoint.screenHeight,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : controller.store.error.isNotEmpty
+                    ? WallErrorWidget(
+                        errorMessage: controller.store.error, screenHeight: breakpoint.screenHeight)
+                    : Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: breakpoint.device == LayoutClass.desktop
+                              ? breakpoint.screenWidth * 0.15
+                              : 16,
                         ),
-                        child: Text(
-                          controller.store.post?.title ?? '',
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: breakpoint.screenWidth * 0.15,
-                          right: breakpoint.screenWidth * 0.15,
-                          top: 8,
-                          bottom: 24,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              controller.store.post?.createdBy ?? '',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: Icon(
-                                Icons.circle_rounded,
-                                size: 8,
-                                color: Theme.of(context).primaryColor,
+                              padding: const EdgeInsets.only(top: 70, bottom: 16),
+                              child: Text(
+                                controller.store.post?.title ?? '',
+                                style: breakpoint.device == LayoutClass.desktop
+                                    ? theme.textTheme.headline2
+                                    : breakpoint.device == LayoutClass.tablet
+                                        ? theme.textTheme.headline4
+                                        : theme.textTheme.headline6,
                               ),
                             ),
-                            Text(
-                              DateFormat('MMM dd, y')
-                                  .format(controller.store.post!.createdAt.toLocal())
-                                  .toString(),
-                              style: Theme.of(context).textTheme.bodyText1,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 24),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    controller.store.post?.createdBy ?? '',
+                                    style: theme.textTheme.bodyText1,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    child: Icon(
+                                      Icons.circle_rounded,
+                                      size: 8,
+                                      color: theme.primaryColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    DateFormat('MMM dd, y')
+                                        .format(controller.store.post!.createdAt.toLocal())
+                                        .toString(),
+                                    style: theme.textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 24, bottom: 40),
+                              child: Text(
+                                controller.store.post?.content ?? '',
+                                style: theme.textTheme.bodyText2,
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: breakpoint.screenWidth * 0.15,
-                          right: breakpoint.screenWidth * 0.15,
-                          top: 24,
-                          bottom: 40,
-                        ),
-                        child: Text(
-                          controller.store.post?.content ?? '',
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
-                    ],
-                  );
+                      );
           },
         ),
       ),
