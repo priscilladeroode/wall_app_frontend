@@ -113,5 +113,18 @@ void main() {
 
       expect(result.fold(id, id), isA<PostsFailures>());
     });
+
+    test('''
+    Given a valid call for the method loadById,
+    When mapper throws failure,
+    Then a failure should be returned.
+  ''', () async {
+      when(() => datasource.loadById(any())).thenAnswer((_) async => postModel);
+      when(() => mapper.fromModel(postModel)).thenThrow(Exception());
+
+      final result = await repository.loadById('');
+
+      expect(result.fold(id, id), isA<PostsRepositoryFailure>());
+    });
   });
 }
