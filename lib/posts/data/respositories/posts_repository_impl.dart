@@ -25,4 +25,16 @@ class PostsRepositoryImpl implements PostsRepository {
       return left(PostsRepositoryFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<PostsFailures, PostResponseEntity>> loadById(String id) async {
+    try {
+      final result = await datasource.loadById(id);
+      return right(mapper.fromModel(result));
+    } on PostsFailures catch (e) {
+      return left(e);
+    } catch (e) {
+      return left(PostsRepositoryFailure(message: e.toString()));
+    }
+  }
 }
