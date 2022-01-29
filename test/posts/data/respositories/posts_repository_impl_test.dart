@@ -90,17 +90,28 @@ void main() {
 
       expect(result.fold(id, id), isA<PostResponseEntity>());
     });
-  });
-
-  test('''
+    test('''
     Given a valid call for the method loadById,
     When datasource throws,
     Then a failure should be returned.
   ''', () async {
-    when(() => datasource.loadById(any())).thenThrow(() async => Exception());
+      when(() => datasource.loadById(any())).thenThrow(() async => Exception());
 
-    final result = await repository.loadById('');
+      final result = await repository.loadById('');
 
-    expect(result.fold(id, id), isA<PostsRepositoryFailure>());
+      expect(result.fold(id, id), isA<PostsRepositoryFailure>());
+    });
+
+    test('''
+    Given a valid call for the method loadById,
+    When datasource throws failure,
+    Then a failure should be returned.
+  ''', () async {
+      when(() => datasource.loadById(any())).thenThrow(() async => PostsDatasourceError());
+
+      final result = await repository.loadById('');
+
+      expect(result.fold(id, id), isA<PostsFailures>());
+    });
   });
 }
