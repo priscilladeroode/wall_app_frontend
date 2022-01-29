@@ -11,6 +11,7 @@ class AppWidget extends StatelessWidget {
       title: 'Wall App',
       theme: WallThemes.light,
       darkTheme: WallThemes.dark,
+      themeMode: ThemeMode.light,
     ).modular();
   }
 }
