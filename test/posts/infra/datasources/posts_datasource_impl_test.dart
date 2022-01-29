@@ -102,5 +102,22 @@ void main() {
       final result = await _datasource.loadById('');
       expect(result, isA<PostResponseModel>());
     });
+
+    test('''
+    Given a valid call to method loadById,
+    When dio returns a status code different then 200,
+    Then should throw an PostsDatasourceError
+  ''', () async {
+      when(() => _dio.get(any())).thenAnswer(
+        (_) async => Response(
+          statusCode: 400,
+          requestOptions: RequestOptions(path: ''),
+          data: json.decode('{}'),
+        ),
+      );
+
+      final result = _datasource.loadById('');
+      expect(result, throwsA(isA<PostsDatasourceError>()));
+    });
   });
 }
