@@ -9,7 +9,15 @@ final darkTheme = ThemeData(
   primarySwatch: WallColors.materialColor,
   scaffoldBackgroundColor: WallColors.neutral100,
   errorColor: WallColors.error700,
-  appBarTheme: const AppBarTheme(backgroundColor: WallColors.neutral50),
+  appBarTheme: const AppBarTheme(
+    backgroundColor: WallColors.neutral800,
+    iconTheme: IconThemeData(
+      color: WallColors.primaryColor400,
+    ),
+    actionsIconTheme: IconThemeData(
+      color: WallColors.primaryColor400,
+    ),
+  ),
   textTheme: TextTheme(
     headline1: WallTypography.h1.copyWith(color: WallColors.neutral50),
     headline2: WallTypography.h2.copyWith(color: WallColors.neutral50),
