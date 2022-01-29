@@ -119,5 +119,16 @@ void main() {
       final result = _datasource.loadById('');
       expect(result, throwsA(isA<PostsDatasourceError>()));
     });
+
+    test('''
+    Given a valid call to method loadById,
+    When dio throws,
+    Then should throw.
+  ''', () async {
+      when(() => _dio.get(any())).thenThrow(Exception());
+
+      final result = _datasource.loadById('');
+      expect(result, throwsA(isA<Exception>()));
+    });
   });
 }
