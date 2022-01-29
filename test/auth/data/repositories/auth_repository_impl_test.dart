@@ -5,6 +5,7 @@ import 'package:wall_app_frontend/auth/data/mappers/signup_from_domain_mapper.da
 import 'package:wall_app_frontend/auth/data/mappers/signup_to_domain_mapper.dart';
 import 'package:wall_app_frontend/auth/data/repositories/auth_repository_impl.dart';
 import 'package:wall_app_frontend/auth/domain/entities/signup_response_entity.dart';
+import 'package:wall_app_frontend/auth/domain/failures/auth_failures.dart';
 import 'package:wall_app_frontend/auth/domain/repositories/auth_repository.dart';
 import 'package:wall_app_frontend/commons/either.dart';
 
@@ -46,6 +47,19 @@ void main() {
       final result = await repository.signUp(signUpRequestEntity);
 
       expect(result.fold(id, id), isA<SignUpResponseEntity>());
+    });
+
+    test('''
+     Given a valid call for the method signUp with valid credentials,
+    When datasource throws,
+    Then a failure should be returned.
+  ''', () async {
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel)).thenThrow(() async => Exception());
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<AuthRepositoryFailure>());
     });
   });
 }
