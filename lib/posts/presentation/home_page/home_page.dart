@@ -5,7 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../commons/breakpoints.dart';
 import '../../../wall_ui.dart/base_components/wall_page_title.dart';
 import '../../../wall_ui.dart/components/wall_app_bar.dart';
-import '../../../wall_ui.dart/components/wall_post_card.dart';
+import 'components/cards_grid_widget.dart';
 import 'home_page_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,43 +47,13 @@ class _HomePageState extends ModularState<HomePage, HomePageController> {
             ),
             Observer(
               builder: (context) {
-                return controller.store.loading == true
-                    ? const Center(
-                        child: SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : Expanded(
-                        child: GridView.builder(
-                          padding: device == LayoutClass.desktop
-                              ? EdgeInsets.only(
-                                  bottom: 40,
-                                  left: MediaQuery.of(context).size.width * 0.15,
-                                  right: MediaQuery.of(context).size.width * 0.15,
-                                )
-                              : const EdgeInsets.only(bottom: 40, left: 16, right: 16),
-                          shrinkWrap: true,
-                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                            mainAxisExtent: 400,
-                            maxCrossAxisExtent: 400,
-                            childAspectRatio: 1,
-                            mainAxisSpacing: 24,
-                            crossAxisSpacing: 24,
-                          ),
-                          itemCount: controller.store.posts.length,
-                          itemBuilder: (context, index) {
-                            return WallPostCard(
-                              device: device,
-                              isNew: index < 2,
-                              post: controller.store.posts[index],
-                            );
-                          },
-                        ),
-                      );
+                return CardsGridWidget(
+                  device: device,
+                  loading: controller.store.loading,
+                  posts: controller.store.posts,
+                );
               },
-            )
+            ),
           ],
         ),
       ),

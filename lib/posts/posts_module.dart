@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wall_app_frontend/posts/presentation/post_details_page/post_details_page.dart';
 
 import 'data/mappers/post_mapper.dart';
 import 'data/respositories/posts_repository_impl.dart';
@@ -24,5 +25,6 @@ class PostsModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute(Modular.initialRoute, child: (_, __) => const HomePage()),
+        ChildRoute('/post/:id', child: (_, args) => PostDetailsPage(postId: args.params['id'])),
       ];
 }

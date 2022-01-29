@@ -11,11 +11,13 @@ class WallPostCard extends StatefulWidget {
   final PostResponseEntity post;
   final LayoutClass device;
   final bool isNew;
+  final VoidCallback? onTap;
   const WallPostCard({
     Key? key,
     required this.post,
     required this.device,
     this.isNew = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -32,57 +34,60 @@ class _WallPostCardState extends State<WallPostCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(1),
-      decoration: borderDecoration,
-      child: DecoratedBox(
-        decoration: decoration,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  if (widget.isNew) const WallChip(label: 'new'),
-                  const Spacer(),
-                  Text(
-                    DateFormat('MMM dd, y').format(widget.post.createdAt.toLocal()).toString(),
-                    style: Theme.of(context).textTheme.bodyText2,
-                  )
-                ],
-              ),
-              const SizedBox(height: 16),
-              WallCardTitle(device: widget.device, title: widget.post.title),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  widget.post.content,
-                  maxLines: 4,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        overflow: TextOverflow.ellipsis,
-                      ),
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Container(
+        padding: const EdgeInsets.all(1),
+        decoration: borderDecoration,
+        child: DecoratedBox(
+          decoration: decoration,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    if (widget.isNew) const WallChip(label: 'new'),
+                    const Spacer(),
+                    Text(
+                      DateFormat('MMM dd, y').format(widget.post.createdAt.toLocal()).toString(),
+                      style: Theme.of(context).textTheme.bodyText2,
+                    )
+                  ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  widget.post.createdBy,
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                        overflow: TextOverflow.ellipsis,
-                        color: Theme.of(context).primaryColor,
-                      ),
+                const SizedBox(height: 16),
+                WallCardTitle(device: widget.device, title: widget.post.title),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    widget.post.content,
+                    maxLines: 4,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: Theme.of(context).primaryColor,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    widget.post.createdBy,
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          overflow: TextOverflow.ellipsis,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                  ),
                 ),
-              )
-            ],
+                const Spacer(),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
