@@ -54,5 +54,16 @@ void main() {
       final result = _datasource.signUp(signUpRequestMock);
       expect(result, throwsA(isA<AuthDatasourceError>()));
     });
+
+    test('''
+    Given a valid call to method signUp with valid values,
+    When dio throws,
+    Then should throw.
+  ''', () async {
+      when(() => _dio.post(any(), data: any(named: "data"))).thenThrow(Exception());
+
+      final result = _datasource.signUp(signUpRequestMock);
+      expect(result, throwsA(isA<Exception>()));
+    });
   });
 }
