@@ -61,5 +61,19 @@ void main() {
 
       expect(result.fold(id, id), isA<AuthRepositoryFailure>());
     });
+
+    test('''
+    Given a valid call for the method signUp with valid credentials,
+    When datasource throws failure,
+    Then a failure should be returned.
+  ''', () async {
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel))
+          .thenThrow(() async => AuthDatasourceError());
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<AuthFailures>());
+    });
   });
 }
