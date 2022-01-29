@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import '../../../commons/breakpoints.dart';
-import '../../../wall_ui.dart/components/wall_app_bar.dart';
+import '../../../wall_ui.dart/components/wall_app_bar/wall_app_bar.dart';
 import 'post_details_page_controller.dart';
 
 class PostDetailsPage extends StatefulWidget {
@@ -15,6 +15,8 @@ class PostDetailsPage extends StatefulWidget {
 }
 
 class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPageController> {
+  late Breakpoint breakpoint;
+
   @override
   void initState() {
     controller.getPost(widget.postId);
@@ -22,77 +24,83 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
   }
 
   @override
+  void didChangeDependencies() {
+    breakpoint = Breakpoint.fromMediaQuery(context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final device = Breakpoint.fromMediaQuery(context).device;
     return Scaffold(
       appBar: WallAppBar(
-        device: device,
-        widthScreen: MediaQuery.of(context).size.width,
+        breakpoint: breakpoint,
       ),
       body: SingleChildScrollView(
-        child: Observer(builder: (context) {
-          return controller.store.loading
-              ? const Center(child: CircularProgressIndicator())
-              : Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.15,
-                        right: MediaQuery.of(context).size.width * 0.15,
-                        top: 70,
-                        bottom: 16,
+        child: Observer(
+          builder: (context) {
+            return controller.store.loading
+                ? const Center(child: CircularProgressIndicator())
+                : Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: breakpoint.screenWidth * 0.15,
+                          right: breakpoint.screenWidth * 0.15,
+                          top: 70,
+                          bottom: 16,
+                        ),
+                        child: Text(
+                          controller.store.post?.title ?? '',
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
                       ),
-                      child: Text(
-                        controller.store.post?.title ?? '',
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.15,
-                        right: MediaQuery.of(context).size.width * 0.15,
-                        top: 8,
-                        bottom: 24,
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            controller.store.post?.createdBy ?? '',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Icon(
-                              Icons.circle_rounded,
-                              size: 8,
-                              color: Theme.of(context).primaryColor,
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: breakpoint.screenWidth * 0.15,
+                          right: breakpoint.screenWidth * 0.15,
+                          top: 8,
+                          bottom: 24,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              controller.store.post?.createdBy ?? '',
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
-                          ),
-                          Text(
-                            DateFormat('MMM dd, y')
-                                .format(controller.store.post!.createdAt.toLocal())
-                                .toString(),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: Icon(
+                                Icons.circle_rounded,
+                                size: 8,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            Text(
+                              DateFormat('MMM dd, y')
+                                  .format(controller.store.post!.createdAt.toLocal())
+                                  .toString(),
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.15,
-                        right: MediaQuery.of(context).size.width * 0.15,
-                        top: 24,
-                        bottom: 40,
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: breakpoint.screenWidth * 0.15,
+                          right: breakpoint.screenWidth * 0.15,
+                          top: 24,
+                          bottom: 40,
+                        ),
+                        child: Text(
+                          controller.store.post?.content ?? '',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                       ),
-                      child: Text(
-                        controller.store.post?.content ?? '',
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ),
-                  ],
-                );
-        }),
+                    ],
+                  );
+          },
+        ),
       ),
     );
   }
