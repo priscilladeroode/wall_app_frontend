@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../commons/breakpoints.dart';
 import '../../posts/domain/entities/post_response_entity.dart';
+import '../base_components/wall_card_title.dart';
 import '../base_components/wall_chip.dart';
 import '../tokens/wall_gradients.dart';
 
-class PostCard extends StatefulWidget {
+class WallPostCard extends StatefulWidget {
   final PostResponseEntity post;
+  final LayoutClass device;
   final bool isNew;
-  const PostCard({
+  const WallPostCard({
     Key? key,
     required this.post,
+    required this.device,
     this.isNew = false,
   }) : super(key: key);
 
   @override
-  State<PostCard> createState() => _PostCardState();
+  State<WallPostCard> createState() => _WallPostCardState();
 }
 
-class _PostCardState extends State<PostCard> {
+class _WallPostCardState extends State<WallPostCard> {
   BoxDecoration get borderDecoration => widget.isNew
       ? const BoxDecoration(gradient: WallGradients.primaryGradient)
       : BoxDecoration(color: Theme.of(context).cardColor);
 
   BoxDecoration get decoration =>
       widget.isNew ? BoxDecoration(color: Theme.of(context).cardColor) : const BoxDecoration();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,21 +52,13 @@ class _PostCardState extends State<PostCard> {
                   )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  widget.post.title,
-                  maxLines: 3,
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                ),
-              ),
+              const SizedBox(height: 16),
+              WallCardTitle(device: widget.device, title: widget.post.title),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   widget.post.content,
-                  maxLines: 3,
+                  maxLines: 4,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -72,6 +69,7 @@ class _PostCardState extends State<PostCard> {
                 child: Text(
                   widget.post.createdBy,
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        overflow: TextOverflow.ellipsis,
                         color: Theme.of(context).primaryColor,
                       ),
                 ),
