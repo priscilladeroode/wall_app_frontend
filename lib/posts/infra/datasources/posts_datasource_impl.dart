@@ -19,4 +19,13 @@ class PostsDatasourceImpl implements PostsDatasource {
     }
     throw PostsDatasourceError();
   }
+
+  @override
+  Future<PostResponseModel> loadById(String id) async {
+    final result = await dio.get('$endpoint/$id');
+    if (result.statusCode == 200) {
+      return PostResponseModel.fromJson(result.data);
+    }
+    throw PostsDatasourceError();
+  }
 }
