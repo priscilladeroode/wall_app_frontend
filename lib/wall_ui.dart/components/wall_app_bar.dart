@@ -5,18 +5,20 @@ import '../../commons/breakpoints.dart';
 class WallAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? mainActions;
   final List<Widget>? actions;
-  final Breakpoint breakpoint;
+  final LayoutClass device;
+  final double? widthScreen;
 
   const WallAppBar({
     Key? key,
     this.actions,
     this.mainActions,
-    required this.breakpoint,
+    required this.device,
+    this.widthScreen,
   }) : super(key: key);
 
-  bool get desktop => breakpoint.device == LayoutClass.desktop;
+  bool get desktop => device == LayoutClass.desktop;
   double get height => desktop ? 95 : 65;
-  double get width => desktop ? 1128 : double.maxFinite;
+  double get width => desktop ? (widthScreen! * 0.70) : double.maxFinite;
 
   @override
   Widget build(BuildContext context) {
