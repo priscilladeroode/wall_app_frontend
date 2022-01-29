@@ -14,7 +14,7 @@ class PostDetailsPageController {
     store.setLoading = true;
     final result = await usecase(id);
     result.fold(
-      (l) => store.error = l.message ?? "Ops... an error has occured. Try again later.",
+      (l) => store.setError = l.message ?? "Ops... an error has occured. Try again later.",
       (r) => store.setPost = r,
     );
     store.setLoading = false;
