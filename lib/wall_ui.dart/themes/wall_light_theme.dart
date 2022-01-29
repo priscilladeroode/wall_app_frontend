@@ -20,7 +20,7 @@ final lightTheme = ThemeData(
     bodyText1: WallTypography.bodyLarge.copyWith(color: WallColors.neutral800),
     bodyText2: WallTypography.bodySmall.copyWith(color: WallColors.neutral800),
     button: WallTypography.elevatedButton.copyWith(color: WallColors.neutral50),
-    caption: WallTypography.caption.copyWith(color: WallColors.neutral500),
+    caption: WallTypography.caption.copyWith(color: WallColors.neutral50),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
