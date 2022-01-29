@@ -3,15 +3,15 @@ import '../../commons/breakpoints.dart';
 
 class WallPageTitle extends StatelessWidget {
   final String title;
-  final Breakpoint breakpoint;
+  final LayoutClass device;
   const WallPageTitle({
     Key? key,
     required this.title,
-    required this.breakpoint,
+    required this.device,
   }) : super(key: key);
 
   TextStyle getStyle(BuildContext context) {
-    switch (breakpoint.device) {
+    switch (device) {
       case LayoutClass.desktop:
         return Theme.of(context).textTheme.headline1!;
 
