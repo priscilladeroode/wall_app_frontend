@@ -24,53 +24,71 @@ void main() {
     mapper = PostMapperMock();
     repository = PostsRepositoryImpl(datasource: datasource, mapper: mapper);
   });
-  test('''
+
+  group('loadAll', () {
+    test('''
     Given a valid call for the method loadAll,
     When datasource return a list of posts,
     Then a list of PostResponseEntity should be returned.
   ''', () async {
-    when(() => datasource.loadAll()).thenAnswer((_) async => [postModel]);
-    when(() => mapper.fromModelList(any())).thenReturn([postEntity]);
+      when(() => datasource.loadAll()).thenAnswer((_) async => [postModel]);
+      when(() => mapper.fromModelList(any())).thenReturn([postEntity]);
 
-    final result = await repository.loadAll();
+      final result = await repository.loadAll();
 
-    expect(result.fold(id, id), isA<List<PostResponseEntity>>());
-  });
+      expect(result.fold(id, id), isA<List<PostResponseEntity>>());
+    });
 
-  test('''
+    test('''
     Given a valid call for the method loadAll,
     When datasource throws,
     Then a failure should be returned.
   ''', () async {
-    when(() => datasource.loadAll()).thenThrow(() async => Exception());
+      when(() => datasource.loadAll()).thenThrow(() async => Exception());
 
-    final result = await repository.loadAll();
+      final result = await repository.loadAll();
 
-    expect(result.fold(id, id), isA<PostsRepositoryFailure>());
-  });
+      expect(result.fold(id, id), isA<PostsRepositoryFailure>());
+    });
 
-  test('''
+    test('''
     Given a valid call for the method loadAll,
     When datasource throws failure,
     Then a failure should be returned.
   ''', () async {
-    when(() => datasource.loadAll()).thenThrow(() async => PostsDatasourceError());
+      when(() => datasource.loadAll()).thenThrow(() async => PostsDatasourceError());
 
-    final result = await repository.loadAll();
+      final result = await repository.loadAll();
 
-    expect(result.fold(id, id), isA<PostsFailures>());
-  });
+      expect(result.fold(id, id), isA<PostsFailures>());
+    });
 
-  test('''
+    test('''
     Given a valid call for the method loadAll,
     When mapper throws failure,
     Then a failure should be returned.
   ''', () async {
-    when(() => datasource.loadAll()).thenAnswer((_) async => [postModel]);
-    when(() => mapper.fromModelList(any())).thenThrow(Exception());
+      when(() => datasource.loadAll()).thenAnswer((_) async => [postModel]);
+      when(() => mapper.fromModelList(any())).thenThrow(Exception());
 
-    final result = await repository.loadAll();
+      final result = await repository.loadAll();
 
-    expect(result.fold(id, id), isA<PostsRepositoryFailure>());
+      expect(result.fold(id, id), isA<PostsRepositoryFailure>());
+    });
+  });
+
+  group('loadById', () {
+    test('''
+    Given a valid call for the method loadById,
+    When datasource return a posts,
+    Then a PostResponseEntity should be returned.
+  ''', () async {
+      when(() => datasource.loadById('')).thenAnswer((_) async => postModel);
+      when(() => mapper.fromModel(postModel)).thenReturn(postEntity);
+
+      final result = await repository.loadById('');
+
+      expect(result.fold(id, id), isA<PostResponseEntity>());
+    });
   });
 }
