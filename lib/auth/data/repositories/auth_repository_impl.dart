@@ -40,7 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
           return left(MissingPassword());
         case 'missing_passwordConfirmation':
           return left(MissingPasswordConfirmation());
-        case 'lenght_error_password':
+        case 'length_error_password':
           return left(InvalidPasswordLength());
         case 'password_dont_match':
           return left(PasswordDontMatch());
