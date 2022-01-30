@@ -22,20 +22,19 @@ abstract class SignUpFormStoreBase with Store {
   TextEditingController passwordConfirmationController = TextEditingController();
 
   @observable
-  bool passwordVisibility = false;
+  bool passwordObscure = true;
 
   @observable
-  bool passwordConfirmationVisibility = false;
+  bool passwordConfirmationObscure = true;
 
   @observable
   String error = '';
 
   @action
-  setPasswordVisibility() => passwordVisibility = !passwordVisibility;
+  setPasswordVisibility() => passwordObscure = !passwordObscure;
 
   @action
-  setPasswordConfirmationVisibility() =>
-      passwordConfirmationVisibility = !passwordConfirmationVisibility;
+  setPasswordConfirmationVisibility() => passwordConfirmationObscure = !passwordConfirmationObscure;
 
   set setError(String value) => error = value;
 

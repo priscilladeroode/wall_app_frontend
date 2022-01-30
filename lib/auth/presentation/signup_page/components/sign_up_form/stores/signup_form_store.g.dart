@@ -89,36 +89,36 @@ mixin _$SignUpFormStore on SignUpFormStoreBase, Store {
     });
   }
 
-  final _$passwordVisibilityAtom =
-      Atom(name: 'SignUpFormStoreBase.passwordVisibility');
+  final _$passwordObscureAtom =
+      Atom(name: 'SignUpFormStoreBase.passwordObscure');
 
   @override
-  bool get passwordVisibility {
-    _$passwordVisibilityAtom.reportRead();
-    return super.passwordVisibility;
+  bool get passwordObscure {
+    _$passwordObscureAtom.reportRead();
+    return super.passwordObscure;
   }
 
   @override
-  set passwordVisibility(bool value) {
-    _$passwordVisibilityAtom.reportWrite(value, super.passwordVisibility, () {
-      super.passwordVisibility = value;
+  set passwordObscure(bool value) {
+    _$passwordObscureAtom.reportWrite(value, super.passwordObscure, () {
+      super.passwordObscure = value;
     });
   }
 
-  final _$passwordConfirmationVisibilityAtom =
-      Atom(name: 'SignUpFormStoreBase.passwordConfirmationVisibility');
+  final _$passwordConfirmationObscureAtom =
+      Atom(name: 'SignUpFormStoreBase.passwordConfirmationObscure');
 
   @override
-  bool get passwordConfirmationVisibility {
-    _$passwordConfirmationVisibilityAtom.reportRead();
-    return super.passwordConfirmationVisibility;
+  bool get passwordConfirmationObscure {
+    _$passwordConfirmationObscureAtom.reportRead();
+    return super.passwordConfirmationObscure;
   }
 
   @override
-  set passwordConfirmationVisibility(bool value) {
-    _$passwordConfirmationVisibilityAtom
-        .reportWrite(value, super.passwordConfirmationVisibility, () {
-      super.passwordConfirmationVisibility = value;
+  set passwordConfirmationObscure(bool value) {
+    _$passwordConfirmationObscureAtom
+        .reportWrite(value, super.passwordConfirmationObscure, () {
+      super.passwordConfirmationObscure = value;
     });
   }
 
@@ -170,8 +170,8 @@ fullNameController: ${fullNameController},
 emailController: ${emailController},
 passwordController: ${passwordController},
 passwordConfirmationController: ${passwordConfirmationController},
-passwordVisibility: ${passwordVisibility},
-passwordConfirmationVisibility: ${passwordConfirmationVisibility},
+passwordObscure: ${passwordObscure},
+passwordConfirmationObscure: ${passwordConfirmationObscure},
 error: ${error}
     ''';
   }

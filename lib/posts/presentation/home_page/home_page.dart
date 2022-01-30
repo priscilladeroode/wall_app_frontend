@@ -38,7 +38,9 @@ class _HomePageState extends ModularState<HomePage, HomePageController> {
         mainActions: [
           TextButton(onPressed: () {}, child: const Text('Sign In')),
           const SizedBox(width: 16),
-          ElevatedButton(onPressed: () {}, child: Text('Sign Up'.toUpperCase()))
+          ElevatedButton(
+              onPressed: () => Modular.to.pushNamed('/auth/signup'),
+              child: Text('Sign Up'.toUpperCase()))
         ],
       ),
       body: SizedBox(
