@@ -15,7 +15,7 @@ class AuthDatasourceImpl implements AuthDatasource {
   Future<SignUpResponseModel> signUp(SignUpRequestModel signUpCredentials) async {
     final _result =
         await dio.post('$endpoint/signup', data: signUpCredentials.toJson(signUpCredentials));
-    if (_result.statusCode == 200 || _result.statusCode == 200) {
+    if (_result.statusCode == 200 || _result.statusCode == 201) {
       return SignUpResponseModel.fromJson(_result.data);
     }
     throw AuthDatasourceError();
