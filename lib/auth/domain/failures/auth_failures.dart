@@ -63,3 +63,8 @@ class InvalidPasswordLength extends AuthFailures {
   @override
   String? get message => "Password must have between 6 and 10 characters";
 }
+
+class EmailInUse extends AuthFailures {
+  @override
+  String? get message => "This e-mail is already in use.";
+}

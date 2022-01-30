@@ -44,6 +44,8 @@ class AuthRepositoryImpl implements AuthRepository {
           return left(InvalidPasswordLength());
         case 'password_dont_match':
           return left(PasswordDontMatch());
+        case 'email_in_use':
+          return left(EmailInUse());
         default:
           return left(AuthRepositoryFailure());
       }
