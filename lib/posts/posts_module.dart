@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'data/mappers/post_mapper.dart';
@@ -26,7 +25,6 @@ class PostsModule extends Module {
         Bind.factory((i) => PostsRepositoryImpl(datasource: i(), mapper: i())),
         Bind.factory((i) => PostMapper()),
         Bind.factory((i) => PostsDatasourceImpl(i())),
-        Bind.factory((i) => Dio())
       ];
 
   @override
