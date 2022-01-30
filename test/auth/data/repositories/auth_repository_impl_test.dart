@@ -225,5 +225,26 @@ void main() {
 
       expect(result.fold(id, id), isA<InvalidPasswordLength>());
     });
+
+    test('''
+    Given a valid call for the method signUp with valid credentials,
+    When datasource throws a DioError with code password_dont_match,
+    Then a PasswordDontMatch should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"password_dont_match"
+        }
+      ''';
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<PasswordDontMatch>());
+    });
   });
 }
