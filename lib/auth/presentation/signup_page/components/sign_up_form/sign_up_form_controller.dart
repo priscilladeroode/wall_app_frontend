@@ -1,4 +1,5 @@
 import 'package:validators/validators.dart' as validator;
+import 'package:wall_app_frontend/auth/presentation/stores/auth_store.dart';
 
 import '../../../../domain/entities/signup_request_entity.dart';
 import '../../../../domain/failures/auth_failures.dart';
@@ -8,8 +9,9 @@ import 'stores/signup_form_store.dart';
 class SignUpFormController {
   final SignUpUseCase usecase;
   final SignUpFormStore store;
+  final AuthStore authStore;
 
-  SignUpFormController(this.usecase, this.store);
+  SignUpFormController(this.usecase, this.store, this.authStore);
 
   Future<void> register() async {
     store.setLoading = true;
@@ -24,7 +26,11 @@ class SignUpFormController {
     );
     _result.fold(
       (l) => store.setError = l.message ?? "Ops... an error occured. Try again later.",
-      (r) => null,
+      (r) {
+        authStore.setName = r.name;
+        authStore.setEmail = r.email;
+        authStore.setAccessToken = r.accessToken;
+      },
     );
     store.setLoading = false;
   }

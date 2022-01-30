@@ -13,14 +13,16 @@ import 'presentation/signin_page/signin_page.dart';
 import 'presentation/signup_page/components/sign_up_form/sign_up_form_controller.dart';
 import 'presentation/signup_page/components/sign_up_form/stores/signup_form_store.dart';
 import 'presentation/signup_page/signup_page.dart';
+import 'presentation/stores/auth_store.dart';
 
 class AuthModule extends Module {
   @override
   List<Bind> get binds => [
+        Bind.lazySingleton((i) => AuthStore(), export: true),
         Bind.factory((i) => SignInFormStore()),
-        Bind.factory((i) => SignInFormController(i(), i())),
+        Bind.factory((i) => SignInFormController(i(), i(), i())),
         Bind.factory((i) => SignUpFormStore()),
-        Bind.factory((i) => SignUpFormController(i(), i())),
+        Bind.factory((i) => SignUpFormController(i(), i(), i())),
         Bind.factory((i) => SignUpUseCaseImpl(i())),
         Bind.factory((i) => SignInUseCaseImpl(i())),
         Bind.factory((i) => AuthToDomainMapper()),

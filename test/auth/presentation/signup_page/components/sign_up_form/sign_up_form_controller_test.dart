@@ -7,6 +7,7 @@ import 'package:wall_app_frontend/auth/domain/failures/auth_failures.dart';
 import 'package:wall_app_frontend/auth/domain/usecases/signup_usecase.dart';
 import 'package:wall_app_frontend/auth/presentation/signup_page/components/sign_up_form/sign_up_form_controller.dart';
 import 'package:wall_app_frontend/auth/presentation/signup_page/components/sign_up_form/stores/signup_form_store.dart';
+import 'package:wall_app_frontend/auth/presentation/stores/auth_store.dart';
 import 'package:wall_app_frontend/commons/either.dart';
 
 class SignUpUseCaseMock extends Mock implements SignUpUseCase {}
@@ -15,15 +16,19 @@ class SignUpFormStoreMock extends Mock implements SignUpFormStore {}
 
 class SignUpRequestEntityFake extends Fake implements SignUpRequestEntity {}
 
+class AuthStoreMock extends Mock implements AuthStore {}
+
 void main() {
   late SignUpFormStore _store;
   late SignUpUseCase _usecase;
   late SignUpFormController _controller;
+  late AuthStore _authStore;
 
   setUpAll(() {
     _store = SignUpFormStoreMock();
     _usecase = SignUpUseCaseMock();
-    _controller = SignUpFormController(_usecase, _store);
+    _authStore = AuthStoreMock();
+    _controller = SignUpFormController(_usecase, _store, _authStore);
     registerFallbackValue(SignUpRequestEntityFake());
   });
   test('''
