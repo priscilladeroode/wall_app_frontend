@@ -18,6 +18,7 @@ dependencies:
   flutter_svg: ^1.0.3
   intl: ^0.17.0
   flutter_mobx: ^2.0.3+2
+  validators: ^3.0.0
 
 dev_dependencies:
   flutter_test:
