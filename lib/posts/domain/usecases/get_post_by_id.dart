@@ -1,7 +1,7 @@
-import 'package:wall_app_frontend/commons/either.dart';
-import 'package:wall_app_frontend/posts/domain/entities/post_response_entity.dart';
-import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
-import 'package:wall_app_frontend/posts/domain/repositories/posts_respository.dart';
+import '../../../commons/either.dart';
+import '../entities/post_response_entity.dart';
+import '../failures/posts_failures.dart';
+import '../repositories/posts_respository.dart';
 
 abstract class GetPostById {
   Future<Either<PostsFailures, PostResponseEntity>> call(String id);
