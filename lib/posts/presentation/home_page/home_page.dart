@@ -36,7 +36,8 @@ class _HomePageState extends ModularState<HomePage, HomePageController> {
       appBar: WallAppBar(
         breakpoint: breakpoint,
         mainActions: [
-          TextButton(onPressed: () {}, child: const Text('Sign In')),
+          TextButton(
+              onPressed: () => Modular.to.pushNamed('/auth/signin'), child: const Text('Sign In')),
           const SizedBox(width: 16),
           ElevatedButton(
               onPressed: () => Modular.to.pushNamed('/auth/signup'),
