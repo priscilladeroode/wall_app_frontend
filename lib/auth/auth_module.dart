@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'data/mappers/auth_to_domain_mapper.dart';
 import 'data/mappers/signup_from_domain_mapper.dart';
-import 'data/mappers/signup_to_domain_mapper.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'domain/usecases/signup_usecase.dart';
 import 'infra/datasources/auth_datasource_impl.dart';
@@ -15,7 +15,7 @@ class AuthModule extends Module {
         Bind.factory((i) => SignUpFormStore()),
         Bind.factory((i) => SignUpFormController(i(), i())),
         Bind.factory((i) => SignUpUseCaseImpl(i())),
-        Bind.factory((i) => SignUpToDomainMapper()),
+        Bind.factory((i) => AuthToDomainMapper()),
         Bind.factory((i) => SignUpFromDomainMapper()),
         Bind.factory(
             (i) => AuthRepositoryImpl(mapperFromDomain: i(), mapperToDomain: i(), datasource: i())),

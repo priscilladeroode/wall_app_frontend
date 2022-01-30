@@ -1,9 +1,9 @@
-class SignUpResponseEntity {
+class AuthResponseEntity {
   final String name;
   final String email;
   final String accessToken;
 
-  SignUpResponseEntity({
+  AuthResponseEntity({
     required this.name,
     required this.email,
     required this.accessToken,

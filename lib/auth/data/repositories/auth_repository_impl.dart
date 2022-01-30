@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 
 import '../../../commons/either.dart';
+import '../../domain/entities/auth_response_entity.dart';
 import '../../domain/entities/signup_request_entity.dart';
-import '../../domain/entities/signup_response_entity.dart';
 import '../../domain/failures/auth_failures.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_datasource.dart';
+import '../mappers/auth_to_domain_mapper.dart';
 import '../mappers/signup_from_domain_mapper.dart';
-import '../mappers/signup_to_domain_mapper.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final SignUpFromDomainMapper mapperFromDomain;
-  final SignUpToDomainMapper mapperToDomain;
+  final AuthToDomainMapper mapperToDomain;
   final AuthDatasource datasource;
 
   AuthRepositoryImpl({
@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required this.datasource,
   });
   @override
-  Future<Either<AuthFailures, SignUpResponseEntity>> signUp(
+  Future<Either<AuthFailures, AuthResponseEntity>> signUp(
       SignUpRequestEntity signUpCredentials) async {
     try {
       final _model = mapperFromDomain.handle(signUpCredentials);

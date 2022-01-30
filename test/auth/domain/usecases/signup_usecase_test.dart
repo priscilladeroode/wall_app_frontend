@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:wall_app_frontend/auth/domain/entities/signup_response_entity.dart';
+import 'package:wall_app_frontend/auth/domain/entities/auth_response_entity.dart';
 import 'package:wall_app_frontend/auth/domain/failures/auth_failures.dart';
 import 'package:wall_app_frontend/auth/domain/repositories/auth_repository.dart';
 import 'package:wall_app_frontend/auth/domain/usecases/signup_usecase.dart';
@@ -28,7 +28,7 @@ void main() {
 
     final result = await usecase(signUpRequestEntity);
 
-    expect(result.fold(id, id), isA<SignUpResponseEntity>());
+    expect(result.fold(id, id), isA<AuthResponseEntity>());
   });
 
   test('''
