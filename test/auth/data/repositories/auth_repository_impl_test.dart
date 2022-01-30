@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/auth/data/datasources/auth_datasource.dart';
 import 'package:wall_app_frontend/auth/data/mappers/auth_to_domain_mapper.dart';
+import 'package:wall_app_frontend/auth/data/mappers/signin_from_domain_mapper.dart';
 import 'package:wall_app_frontend/auth/data/mappers/signup_from_domain_mapper.dart';
 import 'package:wall_app_frontend/auth/data/repositories/auth_repository_impl.dart';
 import 'package:wall_app_frontend/auth/domain/entities/auth_response_entity.dart';
@@ -20,20 +21,25 @@ class AuthToDomainMapperMock extends Mock implements AuthToDomainMapper {}
 
 class SignUpFromDomainMapperMock extends Mock implements SignUpFromDomainMapper {}
 
+class SignInFromDomainMapperMock extends Mock implements SignInFromDomainMapper {}
+
 void main() {
   late AuthDatasource datasource;
   late AuthRepository repository;
   late SignUpFromDomainMapper mapperFromDomain;
-  late AuthToDomainMapperMock mapperToDomain;
+  late AuthToDomainMapper mapperToDomain;
+  late SignInFromDomainMapper signInMapperFromDomain;
 
   setUpAll(() {
     datasource = AuthDatasourceMock();
     mapperFromDomain = SignUpFromDomainMapperMock();
     mapperToDomain = AuthToDomainMapperMock();
+    signInMapperFromDomain = SignInFromDomainMapperMock();
     repository = AuthRepositoryImpl(
       datasource: datasource,
       mapperFromDomain: mapperFromDomain,
       mapperToDomain: mapperToDomain,
+      singInMapperFromDomain: signInMapperFromDomain,
     );
   });
   group('signUp', () {
@@ -43,9 +49,8 @@ void main() {
     Then a AuthResponseEntity should be returned.
   ''', () async {
       when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
-      when(() => datasource.signUp(signUpRequestModel))
-          .thenAnswer((_) async => signUpResponseModel);
-      when(() => mapperToDomain.fromModel(signUpResponseModel)).thenReturn(signUpResponseEntity);
+      when(() => datasource.signUp(signUpRequestModel)).thenAnswer((_) async => authResponseModel);
+      when(() => mapperToDomain.fromModel(authResponseModel)).thenReturn(authResponseEntity);
 
       final result = await repository.signUp(signUpRequestEntity);
 
@@ -283,6 +288,152 @@ void main() {
       ));
 
       final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<AuthRepositoryFailure>());
+    });
+  });
+
+  group('signIn', () {
+    test('''
+    Given a valid call for the method signIn with valid credentials,
+    When datasource return a AuthResponseModel,
+    Then a AuthResponseEntity should be returned.
+  ''', () async {
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel)).thenAnswer((_) async => authResponseModel);
+      when(() => mapperToDomain.fromModel(authResponseModel)).thenReturn(authResponseEntity);
+
+      final result = await repository.signIn(signInRequestEntity);
+
+      expect(result.fold(id, id), isA<AuthResponseEntity>());
+    });
+
+    test('''
+     Given a valid call for the method signIn with valid credentials,
+    When datasource throws,
+    Then a failure should be returned.
+  ''', () async {
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel)).thenThrow(() async => Exception());
+
+      final result = await repository.signIn(signInRequestEntity);
+
+      expect(result.fold(id, id), isA<AuthRepositoryFailure>());
+    });
+
+    test('''
+    Given a valid call for the method signIn with valid credentials,
+    When datasource throws failure,
+    Then a failure should be returned.
+  ''', () async {
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel))
+          .thenThrow(() async => AuthDatasourceError());
+
+      final result = await repository.signIn(signInRequestEntity);
+
+      expect(result.fold(id, id), isA<AuthFailures>());
+    });
+
+    test('''
+    Given a valid call for the method signIn with valid credentials,
+    When datasource throws a DioError with code invalid_email,
+    Then a InvalidEmail should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"invalid_email"
+        }
+      ''';
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signIn(signInRequestEntity);
+
+      expect(result.fold(id, id), isA<InvalidEmail>());
+    });
+
+    test('''
+    Given a valid call for the method signIn with valid credentials,
+    When datasource throws a DioError with code missing_email,
+    Then a MissingEmail should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"missing_email"
+        }
+      ''';
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signIn(signInRequestEntity);
+
+      expect(result.fold(id, id), isA<MissingEmail>());
+    });
+
+    test('''
+    Given a valid call for the method signIn with valid credentials,
+    When datasource throws a DioError with code missing_password,
+    Then a MissingPassword should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"missing_password"
+        }
+      ''';
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signIn(signInRequestEntity);
+
+      expect(result.fold(id, id), isA<MissingPassword>());
+    });
+
+    test('''
+    Given a valid call for the method signIn with valid credentials,
+    When datasource throws a DioError with code email_in_use,
+    Then a EmailInUse should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"unauthorized"
+        }
+      ''';
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signIn(signInRequestEntity);
+
+      expect(result.fold(id, id), isA<InvalidUsernameOrPassword>());
+    });
+
+    test('''
+    Given a valid call for the method signIn with valid credentials,
+    When datasource throws a DioError with no code,
+    Then a AuthRepositoryFailure should be returned.
+  ''', () async {
+      const response = '''
+        {}
+      ''';
+      when(() => signInMapperFromDomain.handle(signInRequestEntity)).thenReturn(signInRequestModel);
+      when(() => datasource.signIn(signInRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signIn(signInRequestEntity);
 
       expect(result.fold(id, id), isA<AuthRepositoryFailure>());
     });
