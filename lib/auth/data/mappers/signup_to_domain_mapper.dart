@@ -1,10 +1,10 @@
 import '../../../commons/mapper.dart';
 import '../../domain/entities/signup_response_entity.dart';
-import '../models/signup_response_model.dart';
+import '../models/auth_response_model.dart';
 
-class SignUpToDomainMapper extends Mapper<SignUpResponseEntity, SignUpResponseModel> {
+class SignUpToDomainMapper extends Mapper<SignUpResponseEntity, AuthResponseModel> {
   @override
-  SignUpResponseEntity handle(SignUpResponseModel f) {
+  SignUpResponseEntity handle(AuthResponseModel f) {
     return SignUpResponseEntity(
       name: f.name,
       email: f.email,

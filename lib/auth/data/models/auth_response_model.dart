@@ -1,15 +1,15 @@
-class SignUpResponseModel {
+class AuthResponseModel {
   final String name;
   final String email;
   final String accessToken;
 
-  SignUpResponseModel({
+  AuthResponseModel({
     required this.name,
     required this.email,
     required this.accessToken,
   });
 
-  factory SignUpResponseModel.fromJson(Map<String, dynamic> json) => SignUpResponseModel(
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) => AuthResponseModel(
         name: json['name'] ?? "",
         email: json['email'] ?? "",
         accessToken: json['accessToken'] ?? "",

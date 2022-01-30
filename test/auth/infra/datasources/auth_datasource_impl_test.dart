@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/auth/data/datasources/auth_datasource.dart';
-import 'package:wall_app_frontend/auth/data/models/signup_response_model.dart';
+import 'package:wall_app_frontend/auth/data/models/auth_response_model.dart';
 import 'package:wall_app_frontend/auth/domain/failures/auth_failures.dart';
 import 'package:wall_app_frontend/auth/infra/datasources/auth_datasource_impl.dart';
 
@@ -24,7 +24,7 @@ void main() {
     test('''
     Given a valid call to method signUp with valid values,
     When dio returns a status code 200 or 201 with content,
-    Then should return a SignUpResponseModel
+    Then should return a AuthResponseModel
   ''', () async {
       when(() => _dio.post(any(), data: any(named: "data"))).thenAnswer(
         (_) async => Response(
@@ -35,7 +35,7 @@ void main() {
       );
 
       final result = await _datasource.signUp(signUpRequestMock);
-      expect(result, isA<SignUpResponseModel>());
+      expect(result, isA<AuthResponseModel>());
     });
 
     test('''
