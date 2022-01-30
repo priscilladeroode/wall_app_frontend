@@ -120,5 +120,26 @@ void main() {
 
       expect(result.fold(id, id), isA<InvalidEmail>());
     });
+
+    test('''
+    Given a valid call for the method signUp with valid credentials,
+    When datasource throws a DioError with code missing_name,
+    Then a MissingName should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"missing_name"
+        }
+      ''';
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<MissingName>());
+    });
   });
 }
