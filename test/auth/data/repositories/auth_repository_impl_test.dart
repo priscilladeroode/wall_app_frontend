@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/auth/data/datasources/auth_datasource.dart';
@@ -74,6 +77,27 @@ void main() {
       final result = await repository.signUp(signUpRequestEntity);
 
       expect(result.fold(id, id), isA<AuthFailures>());
+    });
+
+    test('''
+    Given a valid call for the method signUp with valid credentials,
+    When datasource throws a DioError with code invalid_name,
+    Then a InvalidName should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"invalid_name"
+        }
+      ''';
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<InvalidName>());
     });
   });
 }
