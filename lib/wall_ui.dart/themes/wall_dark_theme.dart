@@ -45,4 +45,9 @@ final darkTheme = ThemeData(
       textStyle: WallTypography.textButton,
     ),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(4),
+    ),
+  ),
 );
