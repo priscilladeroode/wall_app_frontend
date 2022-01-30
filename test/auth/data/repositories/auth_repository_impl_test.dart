@@ -249,6 +249,27 @@ void main() {
 
     test('''
     Given a valid call for the method signUp with valid credentials,
+    When datasource throws a DioError with code email_in_use,
+    Then a EmailInUse should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"email_in_use"
+        }
+      ''';
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<EmailInUse>());
+    });
+
+    test('''
+    Given a valid call for the method signUp with valid credentials,
     When datasource throws a DioError with no code,
     Then a AuthRepositoryFailure should be returned.
   ''', () async {
