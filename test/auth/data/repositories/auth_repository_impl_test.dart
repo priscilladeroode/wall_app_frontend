@@ -183,5 +183,26 @@ void main() {
 
       expect(result.fold(id, id), isA<MissingPassword>());
     });
+
+    test('''
+    Given a valid call for the method signUp with valid credentials,
+    When datasource throws a DioError with code missing_passwordConfirmation,
+    Then a MissingPasswordConfirmation should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"missing_passwordConfirmation"
+        }
+      ''';
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<MissingPasswordConfirmation>());
+    });
   });
 }
