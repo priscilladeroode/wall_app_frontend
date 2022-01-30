@@ -11,7 +11,7 @@ void main() {
     When PostMapper is called,
     Then should return a SignUpResponseEntity.
   ''', () async {
-    final result = mapper.fromModel(signUpResponseModel);
+    final result = mapper.fromModel(authResponseModel);
     expect(result, isA<AuthResponseEntity>());
   });
 }

@@ -8,7 +8,7 @@ void main() {
   final mapper = SignUpFromDomainMapper();
   test('''
     Given a valid SignUpRequestEntity,
-    When PostMapper is called,
+    When SignUpFromDomainMapper is called,
     Then should return a SignUpRequestModel.
   ''', () async {
     final result = mapper.handle(signUpRequestEntity);

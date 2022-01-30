@@ -24,7 +24,7 @@ void main() {
     Then should return a SignUpResponseEntity.
   ''', () async {
     when(() => repository.signUp(signUpRequestEntity))
-        .thenAnswer((_) async => right(signUpResponseEntity));
+        .thenAnswer((_) async => right(authResponseEntity));
 
     final result = await usecase(signUpRequestEntity);
 
