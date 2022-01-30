@@ -99,5 +99,26 @@ void main() {
 
       expect(result.fold(id, id), isA<InvalidName>());
     });
+
+    test('''
+    Given a valid call for the method signUp with valid credentials,
+    When datasource throws a DioError with code invalid_email,
+    Then a InvalidEmail should be returned.
+  ''', () async {
+      const response = '''
+        {
+          "errorCode":"invalid_email"
+        }
+      ''';
+      when(() => mapperFromDomain.handle(signUpRequestEntity)).thenReturn(signUpRequestModel);
+      when(() => datasource.signUp(signUpRequestModel)).thenThrow(DioError(
+        requestOptions: RequestOptions(path: ''),
+        response: Response(requestOptions: RequestOptions(path: ''), data: jsonDecode(response)),
+      ));
+
+      final result = await repository.signUp(signUpRequestEntity);
+
+      expect(result.fold(id, id), isA<InvalidEmail>());
+    });
   });
 }
