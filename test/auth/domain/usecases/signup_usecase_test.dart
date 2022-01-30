@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/auth/domain/entities/signup_response_entity.dart';
+import 'package:wall_app_frontend/auth/domain/failures/auth_failures.dart';
 import 'package:wall_app_frontend/auth/domain/repositories/auth_repository.dart';
 import 'package:wall_app_frontend/auth/domain/usecases/signup_usecase.dart';
 import 'package:wall_app_frontend/commons/either.dart';
@@ -28,5 +29,18 @@ void main() {
     final result = await usecase(signUpRequestEntity);
 
     expect(result.fold(id, id), isA<SignUpResponseEntity>());
+  });
+
+  test('''
+    Given a valid call for signUp,
+    When repository returns a failure,
+    Then should return a failure.
+  ''', () async {
+    when(() => repository.signUp(signUpRequestEntity))
+        .thenAnswer((_) async => left(AuthRepositoryFailure()));
+
+    final result = await usecase(signUpRequestEntity);
+
+    expect(result.fold(id, id), isA<AuthFailures>());
   });
 }
