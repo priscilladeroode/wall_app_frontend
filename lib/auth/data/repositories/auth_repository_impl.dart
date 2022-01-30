@@ -45,13 +45,12 @@ class AuthRepositoryImpl implements AuthRepository {
         case 'password_dont_match':
           return left(PasswordDontMatch());
         default:
-          return left(
-              AuthRepositoryFailure(message: 'Ops... an error has occured, try again later.'));
+          return left(AuthRepositoryFailure());
       }
     } on AuthFailures catch (e) {
       return left(e);
     } catch (e) {
-      return left(AuthRepositoryFailure(message: e.toString()));
+      return left(AuthRepositoryFailure());
     }
   }
 }

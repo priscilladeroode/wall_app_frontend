@@ -11,9 +11,7 @@ class AuthDatasourceError extends AuthFailures {
 
 class AuthRepositoryFailure extends AuthFailures {
   @override
-  final String? message;
-
-  AuthRepositoryFailure({this.message});
+  String? get message => 'Ops... an error has occured, try again later.';
 }
 
 class InvalidName extends AuthFailures {
