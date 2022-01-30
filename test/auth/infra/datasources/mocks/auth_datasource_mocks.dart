@@ -1,4 +1,5 @@
 import 'package:faker/faker.dart';
+import 'package:wall_app_frontend/auth/data/models/signin_request_model.dart';
 import 'package:wall_app_frontend/auth/data/models/signup_request_model.dart';
 
 final name = faker.person.name();
@@ -17,4 +18,9 @@ final signUpRequestMock = SignUpRequestModel(
   email: email,
   password: password,
   passwordConfirmation: password,
+);
+
+final signInRequestMock = SignInRequestModel(
+  email: email,
+  password: password,
 );

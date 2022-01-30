@@ -66,4 +66,51 @@ void main() {
       expect(result, throwsA(isA<Exception>()));
     });
   });
+
+  group('signIn', () {
+    test('''
+    Given a valid call to method signIn with valid values,
+    When dio returns a status code 200 or 201 with content,
+    Then should return a AuthResponseModel
+  ''', () async {
+      when(() => _dio.post(any(), data: any(named: "data"))).thenAnswer(
+        (_) async => Response(
+          statusCode: 200,
+          requestOptions: RequestOptions(path: ''),
+          data: json.decode(signUpResponseMock),
+        ),
+      );
+
+      final result = await _datasource.signIn(signInRequestMock);
+      expect(result, isA<AuthResponseModel>());
+    });
+
+    test('''
+    Given a valid call to method signIn with valid values,
+    When dio returns a status code different then 200,
+    Then should throw an AuthDatasourceError
+  ''', () async {
+      when(() => _dio.post(any(), data: any(named: "data"))).thenAnswer(
+        (_) async => Response(
+          statusCode: 400,
+          requestOptions: RequestOptions(path: ''),
+          data: json.decode('[]'),
+        ),
+      );
+
+      final result = _datasource.signIn(signInRequestMock);
+      expect(result, throwsA(isA<AuthDatasourceError>()));
+    });
+
+    test('''
+    Given a valid call to method signIn with valid values,
+    When dio throws,
+    Then should throw.
+  ''', () async {
+      when(() => _dio.post(any(), data: any(named: "data"))).thenThrow(Exception());
+
+      final result = _datasource.signIn(signInRequestMock);
+      expect(result, throwsA(isA<Exception>()));
+    });
+  });
 }
