@@ -1,3 +1,4 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -40,9 +41,110 @@ void main() {
     when(() => _store.passwordConfirmationController).thenReturn(passwordConfirmationController);
     when(() => _usecase(any())).thenAnswer((_) async => left(EmailInUse()));
 
-    final _result = await _controller.register();
+    await _controller.register();
 
     verify(() => _store.setLoading = any()).called(2);
     verify(() => _store.setError = any()).called(2);
   });
+
+  test(
+    '''
+    Given a invalid value,
+    When validateName is called,
+    Then should return a InvalidName message.
+  ''',
+    () {
+      final _result = _controller.validateName('');
+
+      expect(_result, InvalidName().message);
+    },
+  );
+
+  test(
+    '''
+    Given a valid value,
+    When validateName is called,
+    Then should return null.
+  ''',
+    () {
+      final _result = _controller.validateName(faker.person.name());
+
+      expect(_result, null);
+    },
+  );
+
+  test(
+    '''
+    Given a invalid email,
+    When validateEmail is called,
+    Then should return a InvalidEmail message.
+  ''',
+    () {
+      final _result = _controller.validateEmail('');
+
+      expect(_result, InvalidEmail().message);
+    },
+  );
+
+  test(
+    '''
+    Given a valid email,
+    When validateEmail is called,
+    Then should return null.
+  ''',
+    () {
+      final _result = _controller.validateEmail(faker.internet.email());
+
+      expect(_result, null);
+    },
+  );
+
+  test(
+    '''
+    Given a invalid password,
+    When validatePassword is called,
+    Then should return a InvalidPasswordLength message.
+  ''',
+    () {
+      final _result = _controller.validatePassword('');
+
+      expect(_result, InvalidPasswordLength().message);
+    },
+  );
+
+  test(
+    '''
+    Given a valid password,
+    When validatePassword is called,
+    Then should return null.
+  ''',
+    () {
+      final password = faker.internet.password();
+      final passwordController = TextEditingController(text: password);
+      final passwordConfirmationController = TextEditingController(text: password);
+      when(() => _store.passwordController).thenReturn(passwordController);
+      when(() => _store.passwordConfirmationController).thenReturn(passwordConfirmationController);
+      final _result = _controller.validatePassword(password);
+
+      expect(_result, null);
+    },
+  );
+
+  test(
+    '''
+    Given a invalid password and passwordCombination,
+    When validatePassword is called,
+    Then should return PasswordDontMatch message.
+  ''',
+    () {
+      final password = faker.internet.password();
+      final passwordController = TextEditingController(text: password);
+      final passwordConfirmationController = TextEditingController(text: faker.internet.password());
+      when(() => _store.passwordController).thenReturn(passwordController);
+      when(() => _store.passwordConfirmationController).thenReturn(passwordConfirmationController);
+      final _result = _controller.validatePassword(password);
+
+      expect(_result, PasswordDontMatch().message);
+    },
+  );
 }
