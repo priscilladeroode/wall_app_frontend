@@ -1,9 +1,11 @@
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart' as validator;
-import 'package:wall_app_frontend/auth/presentation/stores/auth_store.dart';
 
 import '../../../../domain/entities/signup_request_entity.dart';
 import '../../../../domain/failures/auth_failures.dart';
 import '../../../../domain/usecases/signup_usecase.dart';
+import '../../../stores/auth_store.dart';
 import 'stores/signup_form_store.dart';
 
 class SignUpFormController {
@@ -26,10 +28,16 @@ class SignUpFormController {
     );
     _result.fold(
       (l) => store.setError = l.message ?? "Ops... an error occured. Try again later.",
-      (r) {
+      (r) async {
         authStore.setName = r.name;
         authStore.setEmail = r.email;
         authStore.setAccessToken = r.accessToken;
+        final SharedPreferences _prefs = await SharedPreferences.getInstance();
+        _prefs.setString('name', r.name);
+        _prefs.setString('email', r.email);
+        _prefs.setString('accessToken', r.accessToken);
+
+        Modular.to.navigate("/home/myHome");
       },
     );
     store.setLoading = false;
