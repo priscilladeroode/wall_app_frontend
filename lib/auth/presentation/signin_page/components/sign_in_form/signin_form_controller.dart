@@ -1,3 +1,5 @@
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart' as validator;
 
 import '../../../../domain/entities/signin_request_entity.dart';
@@ -16,6 +18,7 @@ class SignInFormController {
   Future<void> signIn() async {
     store.setLoading = true;
     store.setError = '';
+
     final _result = await usecase(
       SignInRequestEntity(
         email: store.emailController.text,
@@ -24,10 +27,16 @@ class SignInFormController {
     );
     _result.fold(
       (l) => store.setError = l.message ?? "Ops... an error occured. Try again later.",
-      (r) {
+      (r) async {
         authStore.setName = r.name;
         authStore.setEmail = r.email;
         authStore.setAccessToken = r.accessToken;
+        final SharedPreferences _prefs = await SharedPreferences.getInstance();
+        _prefs.setString('name', r.name);
+        _prefs.setString('email', r.email);
+        _prefs.setString('accessToken', r.accessToken);
+
+        Modular.to.navigate("/home/myHome");
       },
     );
     store.setLoading = false;
