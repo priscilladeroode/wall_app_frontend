@@ -18,9 +18,9 @@ class AuthModule extends Module {
   @override
   List<Bind> get binds => [
         Bind.factory((i) => SignInFormStore()),
-        Bind.factory((i) => SignInFormController(i(), i(), i())),
+        Bind.factory((i) => SignInFormController(i(), i(), i(), i())),
         Bind.factory((i) => SignUpFormStore()),
-        Bind.factory((i) => SignUpFormController(i(), i(), i())),
+        Bind.factory((i) => SignUpFormController(i(), i(), i(), i())),
         Bind.factory((i) => SignUpUseCaseImpl(i())),
         Bind.factory((i) => SignInUseCaseImpl(i())),
         Bind.factory((i) => AuthToDomainMapper()),

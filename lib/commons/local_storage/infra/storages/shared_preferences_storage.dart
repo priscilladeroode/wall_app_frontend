@@ -1,20 +1,26 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/user_model.dart';
 import '../../data/storages/local_storage.dart';
 
 class SharedPreferencesStorage implements LocalStorage {
-  final SharedPreferences _storage;
+  SharedPreferences? storage;
+  SharedPreferencesStorage() {
+    init();
+  }
 
-  SharedPreferencesStorage(this._storage);
+  void init() async {
+    storage ??= await Modular.getAsync<SharedPreferences>();
+  }
 
   @override
   Future<bool> saveUserInfo(UserModel userModel) async {
-    final name = await _storage.setString('name', userModel.name);
-    final email = await _storage.setString('email', userModel.email);
-    final accessToken = await _storage.setString('accessToken', userModel.accessToken);
+    final name = await storage?.setString('name', userModel.name);
+    final email = await storage?.setString('email', userModel.email);
+    final accessToken = await storage?.setString('accessToken', userModel.accessToken);
 
-    if (name && email && accessToken) {
+    if (name == true && email == true && accessToken == true) {
       return true;
     } else {
       return false;

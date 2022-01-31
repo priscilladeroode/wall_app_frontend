@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart' as validator;
+import '../../../../../commons/local_storage/domain/entities/user_entity.dart';
+import '../../../../../commons/local_storage/domain/usecases/save_user_usecase.dart';
 
 import '../../../../domain/entities/signup_request_entity.dart';
 import '../../../../domain/failures/auth_failures.dart';
@@ -12,8 +13,9 @@ class SignUpFormController {
   final SignUpUseCase usecase;
   final SignUpFormStore store;
   final AuthStore authStore;
+  final SaveUserUseCase saveUser;
 
-  SignUpFormController(this.usecase, this.store, this.authStore);
+  SignUpFormController(this.usecase, this.store, this.authStore, this.saveUser);
 
   Future<void> register() async {
     store.setLoading = true;
@@ -32,10 +34,7 @@ class SignUpFormController {
         authStore.setName = r.name;
         authStore.setEmail = r.email;
         authStore.setAccessToken = r.accessToken;
-        final SharedPreferences _prefs = await SharedPreferences.getInstance();
-        _prefs.setString('name', r.name);
-        _prefs.setString('email', r.email);
-        _prefs.setString('accessToken', r.accessToken);
+        await saveUser(UserEntity(name: r.name, email: r.email, accessToken: r.accessToken));
 
         Modular.to.navigate("/home/myHome");
       },
