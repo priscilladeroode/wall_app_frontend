@@ -13,12 +13,10 @@ import 'presentation/signin_page/signin_page.dart';
 import 'presentation/signup_page/components/sign_up_form/sign_up_form_controller.dart';
 import 'presentation/signup_page/components/sign_up_form/stores/signup_form_store.dart';
 import 'presentation/signup_page/signup_page.dart';
-import 'presentation/stores/auth_store.dart';
 
 class AuthModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.lazySingleton((i) => AuthStore(), export: true),
         Bind.factory((i) => SignInFormStore()),
         Bind.factory((i) => SignInFormController(i(), i(), i())),
         Bind.factory((i) => SignUpFormStore()),
@@ -39,6 +37,9 @@ class AuthModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/signup', child: (_, __) => const SignUpPage()),
-        ChildRoute('/signin', child: (_, __) => const SignInPage()),
+        ChildRoute(
+          '/signin',
+          child: (_, __) => const SignInPage(),
+        ),
       ];
 }
