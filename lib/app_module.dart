@@ -6,6 +6,7 @@ import 'auth/auth_module.dart';
 import 'auth/presentation/stores/auth_store.dart';
 import 'posts/posts_module.dart';
 import 'splash/splash_module.dart';
+import 'wall_ui.dart/components/wall_app_bar/wall_app_bar_controller.dart';
 
 class AppModule extends Module {
   @override
@@ -13,6 +14,7 @@ class AppModule extends Module {
         Bind.factory((i) => Dio()),
         Bind.singleton((i) => AuthStore()),
         Bind.lazySingleton((i) => AppController(i())),
+        Bind.lazySingleton((i) => WallAppBarController(i())),
       ];
 
   @override

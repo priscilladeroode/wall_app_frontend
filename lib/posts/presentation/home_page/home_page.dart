@@ -35,14 +35,6 @@ class _HomePageState extends ModularState<HomePage, HomePageController> {
     return Scaffold(
       appBar: WallAppBar(
         breakpoint: breakpoint,
-        mainActions: [
-          TextButton(
-              onPressed: () => Modular.to.pushNamed('/auth/signin'), child: const Text('Sign In')),
-          const SizedBox(width: 16),
-          ElevatedButton(
-              onPressed: () => Modular.to.pushNamed('/auth/signup'),
-              child: Text('Sign Up'.toUpperCase()))
-        ],
       ),
       body: SizedBox(
         width: breakpoint.screenWidth,
@@ -56,13 +48,15 @@ class _HomePageState extends ModularState<HomePage, HomePageController> {
             ),
             Observer(
               builder: (context) {
-                return CardsGridWidget(
-                  device: breakpoint.device,
-                  loading: controller.store.loading,
-                  posts: controller.store.posts,
+                return Expanded(
+                  child: CardsGridWidget(
+                    device: breakpoint.device,
+                    loading: controller.store.loading,
+                    posts: controller.store.posts,
+                  ),
                 );
               },
-            ),
+            )
           ],
         ),
       ),

@@ -14,9 +14,9 @@ abstract class AuthStoreBase with Store {
   @observable
   String? accessToken;
 
-  set setName(String value) => name = value;
+  set setName(String? value) => name = value;
 
-  set setEmail(String value) => email = value;
+  set setEmail(String? value) => email = value;
 
-  set setAccessToken(String value) => accessToken = value;
+  set setAccessToken(String? value) => accessToken = value;
 }
