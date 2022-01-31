@@ -9,7 +9,10 @@ import 'package:wall_app_frontend/auth/presentation/signin_page/components/sign_
 import 'package:wall_app_frontend/auth/presentation/signin_page/components/sign_in_form/stores/signin_form_store.dart';
 import 'package:wall_app_frontend/auth/presentation/stores/auth_store.dart';
 import 'package:wall_app_frontend/commons/either.dart';
+import 'package:wall_app_frontend/commons/local_storage/domain/entities/user_entity.dart';
 import 'package:wall_app_frontend/commons/local_storage/domain/usecases/save_user_usecase.dart';
+
+import '../../../../data/mocks/auth_data_mocks.dart';
 
 class SignInUseCaseMock extends Mock implements SignInUseCase {}
 
@@ -20,6 +23,8 @@ class SignInRequestEntityFake extends Fake implements SignInRequestEntity {}
 class AuthStoreMock extends Mock implements AuthStore {}
 
 class SaveUserUseCaseMock extends Mock implements SaveUserUseCase {}
+
+class UserEntityFake extends Fake implements UserEntity {}
 
 void main() {
   late SignInFormStore _store;
@@ -35,6 +40,7 @@ void main() {
     _saveUserUseCase = SaveUserUseCaseMock();
     _controller = SignInFormController(_usecase, _store, _authStore, _saveUserUseCase);
     registerFallbackValue(SignInRequestEntityFake());
+    registerFallbackValue(UserEntityFake());
   });
   test('''
     Given a valid call for signIn method,
@@ -51,6 +57,26 @@ void main() {
 
     verify(() => _store.setLoading = any()).called(2);
     verify(() => _store.setError = any()).called(2);
+  });
+
+  test('''
+    Given a valid call for signIn method,
+    When usecase returns a AuthResponseEntity,
+    Then the values must be set in store and local storage
+  ''', () async {
+    final emailController = TextEditingController(text: '');
+    final passwordController = TextEditingController(text: '');
+    when(() => _store.emailController).thenReturn(emailController);
+    when(() => _store.passwordController).thenReturn(passwordController);
+    when(() => _usecase(any())).thenAnswer((_) async => right(authResponseEntity));
+    when(() => _saveUserUseCase(any())).thenAnswer((_) async => true);
+
+    await _controller.signIn();
+
+    verify(() => _store.setLoading = any()).called(2);
+    verify(() => _authStore.setName = any()).called(1);
+    verify(() => _authStore.setEmail = any()).called(1);
+    verify(() => _authStore.setAccessToken = any()).called(1);
   });
 
   test(
