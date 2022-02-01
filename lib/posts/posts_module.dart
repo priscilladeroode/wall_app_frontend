@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../commons/route_guard/auth_guard.dart';
+import '../commons/route_guard/not_auth_guard.dart';
 import 'data/mappers/post_mapper.dart';
 import 'data/respositories/posts_repository_impl.dart';
 import 'domain/usecases/get_all_posts_usecase.dart';
@@ -36,7 +37,8 @@ class PostsModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute, child: (_, __) => const HomePage()),
+        ChildRoute(Modular.initialRoute,
+            child: (_, __) => const HomePage(), guards: [NoAuthGuard()]),
         ChildRoute('/myHome', child: (_, __) => const LoggedHomePage(), guards: [AuthGuard()]),
         ChildRoute('/post/:id', child: (_, args) => PostDetailsPage(postId: args.params['id'])),
         RedirectRoute('/redirect', to: '/home'),
