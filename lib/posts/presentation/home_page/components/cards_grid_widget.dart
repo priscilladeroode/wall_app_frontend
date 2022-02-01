@@ -48,12 +48,13 @@ class CardsGridWidget extends StatelessWidget {
                 itemCount: posts.length,
                 itemBuilder: (context, index) {
                   return WallPostCard(
+                    key: Key(posts[index].id),
                     owner: owner,
                     device: device,
                     isNew: index < 2,
                     post: posts[index],
-                    onTap: () =>
-                        Modular.to.pushNamed('/home/post/${posts[index].id}', arguments: owner),
+                    onTap: () => Modular.to
+                        .pushNamed('/home/post/$owner/${posts[index].id}', arguments: owner),
                   );
                 },
               )

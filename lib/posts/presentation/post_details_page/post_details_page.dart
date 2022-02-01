@@ -12,8 +12,8 @@ import 'post_details_page_controller.dart';
 
 class PostDetailsPage extends StatefulWidget {
   final String postId;
-  final bool owner;
-  const PostDetailsPage({Key? key, required this.postId, this.owner = false}) : super(key: key);
+  final String owner;
+  const PostDetailsPage({Key? key, required this.postId, this.owner = 'false'}) : super(key: key);
 
   @override
   State<PostDetailsPage> createState() => _PostDetailsPageState();
@@ -92,8 +92,8 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8, bottom: 24),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
                                   Text(
                                     controller.store.post?.createdBy ?? '',
@@ -129,7 +129,7 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
           },
         ),
       ),
-      floatingActionButton: (widget.owner && breakpoint.device == LayoutClass.mobile)
+      floatingActionButton: (widget.owner == "true" && breakpoint.device == LayoutClass.mobile)
           ? FloatingActionBubble(
               items: <Bubble>[
                 Bubble(

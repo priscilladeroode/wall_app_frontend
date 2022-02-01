@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wall_app_frontend/posts/presentation/create_post_page.dart/create_post_page.dart';
 
 import '../commons/route_guard/auth_guard.dart';
 import '../commons/route_guard/not_auth_guard.dart';
@@ -42,11 +43,9 @@ class PostsModule extends Module {
         ChildRoute(Modular.initialRoute,
             child: (_, __) => const HomePage(), guards: [NoAuthGuard()]),
         ChildRoute('/myHome', child: (_, __) => const LoggedHomePage(), guards: [AuthGuard()]),
-        ChildRoute('/post/:id',
-            child: (_, args) => PostDetailsPage(
-                  postId: args.params['id'],
-                  owner: args.data,
-                )),
+        ChildRoute('/post/:owner/:id/',
+            child: (_, args) =>
+                PostDetailsPage(postId: args.params['id'], owner: args.params['owner'])),
         RedirectRoute('/redirect', to: '/home'),
       ];
 }
