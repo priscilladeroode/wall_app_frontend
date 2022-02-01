@@ -5,7 +5,7 @@ import 'presentation/splash_page_controller.dart';
 
 class SplashModule extends Module {
   @override
-  List<Bind> get binds => [Bind.factory((i) => SplashController(i()))];
+  List<Bind> get binds => [Bind.factory((i) => SplashController(i(), i()))];
 
   @override
   List<ModularRoute> get routes => [
