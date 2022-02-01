@@ -123,7 +123,7 @@ class _SignInFormState extends ModularState<SignInForm, SignInFormController> {
                         style: theme.textTheme.bodyText1,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => Modular.to.pushReplacementNamed('/auth/signup'),
                         child: const Text('Sign Up'),
                       )
                     ],

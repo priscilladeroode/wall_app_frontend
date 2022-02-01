@@ -148,7 +148,7 @@ class _SignUpFormState extends ModularState<SignUpForm, SignUpFormController> {
                         style: theme.textTheme.bodyText1,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => Modular.to.pushReplacementNamed('/auth/signin'),
                         child: const Text('Sign In'),
                       )
                     ],
