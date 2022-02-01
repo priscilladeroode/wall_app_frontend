@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+
 import '../../wall_app_bar_controller.dart';
 import 'wall_main_app_bar_area.dart';
 
@@ -16,6 +18,7 @@ class WallDesktopAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: kIsWeb ? false : true,
       toolbarHeight: height,
       title: SizedBox(
         width: width,
