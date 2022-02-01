@@ -24,6 +24,21 @@ mixin _$LoggedHomePageStore on LoggedHomePageStoreBase, Store {
     });
   }
 
+  final _$myPostsAtom = Atom(name: 'LoggedHomePageStoreBase.myPosts');
+
+  @override
+  ObservableList<PostResponseEntity> get myPosts {
+    _$myPostsAtom.reportRead();
+    return super.myPosts;
+  }
+
+  @override
+  set myPosts(ObservableList<PostResponseEntity> value) {
+    _$myPostsAtom.reportWrite(value, super.myPosts, () {
+      super.myPosts = value;
+    });
+  }
+
   final _$loadingAtom = Atom(name: 'LoggedHomePageStoreBase.loading');
 
   @override
@@ -36,6 +51,22 @@ mixin _$LoggedHomePageStore on LoggedHomePageStoreBase, Store {
   set loading(bool value) {
     _$loadingAtom.reportWrite(value, super.loading, () {
       super.loading = value;
+    });
+  }
+
+  final _$myPostsLoadingAtom =
+      Atom(name: 'LoggedHomePageStoreBase.myPostsLoading');
+
+  @override
+  bool get myPostsLoading {
+    _$myPostsLoadingAtom.reportRead();
+    return super.myPostsLoading;
+  }
+
+  @override
+  set myPostsLoading(bool value) {
+    _$myPostsLoadingAtom.reportWrite(value, super.myPostsLoading, () {
+      super.myPostsLoading = value;
     });
   }
 
@@ -54,12 +85,30 @@ mixin _$LoggedHomePageStore on LoggedHomePageStoreBase, Store {
     });
   }
 
+  final _$myPostsErrorAtom = Atom(name: 'LoggedHomePageStoreBase.myPostsError');
+
+  @override
+  String get myPostsError {
+    _$myPostsErrorAtom.reportRead();
+    return super.myPostsError;
+  }
+
+  @override
+  set myPostsError(String value) {
+    _$myPostsErrorAtom.reportWrite(value, super.myPostsError, () {
+      super.myPostsError = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 allPosts: ${allPosts},
+myPosts: ${myPosts},
 loading: ${loading},
-error: ${error}
+myPostsLoading: ${myPostsLoading},
+error: ${error},
+myPostsError: ${myPostsError}
     ''';
   }
 }

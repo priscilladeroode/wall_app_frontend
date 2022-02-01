@@ -10,14 +10,29 @@ abstract class LoggedHomePageStoreBase with Store {
   ObservableList<PostResponseEntity> allPosts = ObservableList.of([]);
 
   @observable
+  ObservableList<PostResponseEntity> myPosts = ObservableList.of([]);
+
+  @observable
   bool loading = false;
+
+  @observable
+  bool myPostsLoading = false;
 
   @observable
   String error = '';
 
+  @observable
+  String myPostsError = '';
+
   set setError(String message) => error = message;
+
+  set setMyPostsError(String message) => myPostsError = message;
 
   set setAllPosts(List<PostResponseEntity> newPosts) => allPosts.addAll(newPosts);
 
+  set setMyPosts(List<PostResponseEntity> newPosts) => myPosts.addAll(newPosts);
+
   set setLoading(bool value) => loading = value;
+
+  set setMyPostsLoading(bool value) => myPostsLoading = value;
 }
