@@ -3,22 +3,27 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wall_app_frontend/auth/presentation/stores/auth_store.dart';
 import 'package:wall_app_frontend/posts/data/datasources/posts_datasource.dart';
 import 'package:wall_app_frontend/posts/data/models/post_response_model.dart';
 import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
 import 'package:wall_app_frontend/posts/infra/datasources/posts_datasource_impl.dart';
 
-import 'mocks/posts_datasource_mocks.dart';
+import '../../mocks/posts_mocks.dart';
 
 class DioMock extends Mock implements Dio {}
+
+class AuthStoreMock extends Mock implements AuthStore {}
 
 void main() {
   late Dio _dio;
   late PostsDatasource _datasource;
+  late AuthStore _store;
 
   setUpAll(() {
     _dio = DioMock();
-    _datasource = PostsDatasourceImpl(_dio);
+    _store = AuthStoreMock();
+    _datasource = PostsDatasourceImpl(_dio, _store);
   });
 
   group('loadAll', () {
@@ -129,6 +134,18 @@ void main() {
 
       final result = _datasource.loadById('');
       expect(result, throwsA(isA<Exception>()));
+    });
+
+    test('''
+    Given a valid call to method createPost,
+    When dio throws,
+    Then should throw.
+  ''', () async {
+      when(() => _store.accessToken).thenReturn('');
+      when(() => _dio.post(any(), options: any(named: "options"), data: any(named: "data")))
+          .thenThrow(Exception());
+
+      expect(_datasource.createPost(postRequestModel), throwsA(isA<Exception>()));
     });
   });
 }
