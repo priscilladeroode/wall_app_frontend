@@ -30,4 +30,10 @@ class SharedPreferencesStorage implements LocalStorage {
       return null;
     }
   }
+
+  @override
+  Future<void> clearLocalStorage() async {
+    final storage = await SharedPreferences.getInstance();
+    storage.clear();
+  }
 }
