@@ -22,6 +22,7 @@ dependencies:
   shared_preferences: ^2.0.12
   modular_test: ^1.0.1+1
   floating_action_bubble: ^1.1.4
+  flutter_flavor: ^3.0.3
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import '../../../auth/presentation/stores/auth_store.dart';
 
 import '../../data/datasources/posts_datasource.dart';
@@ -11,7 +12,7 @@ class PostsDatasourceImpl implements PostsDatasource {
 
   PostsDatasourceImpl(this.dio, this._authStore);
 
-  final endpoint = 'http://10.0.2.2:5050/api';
+  final endpoint = FlavorConfig.instance.variables["baseUrl"];
 
   @override
   Future<List<PostResponseModel>> loadAll() async {

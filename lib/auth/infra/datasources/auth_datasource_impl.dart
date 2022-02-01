@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 
 import '../../data/datasources/auth_datasource.dart';
 import '../../data/models/auth_response_model.dart';
@@ -11,7 +12,7 @@ class AuthDatasourceImpl implements AuthDatasource {
 
   AuthDatasourceImpl(this.dio);
 
-  final endpoint = 'http://localhost:5050/api';
+  final endpoint = FlavorConfig.instance.variables["baseUrl"];
   @override
   Future<AuthResponseModel> signUp(SignUpRequestModel signUpCredentials) async {
     final _result =
