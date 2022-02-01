@@ -13,9 +13,7 @@ class HomePageController {
   Future<void> getAll() async {
     store.setLoading = true;
     final _result = await usecase.loadAll();
-    _result.fold(
-        (l) => {store.error = l.message ?? "Ops... an error has occured. Try again later."},
-        (r) => {store.setPosts = r});
+    _result.fold((l) => {store.error = l.message}, (r) => {store.setPosts = r});
     store.setLoading = false;
   }
 }

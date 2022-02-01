@@ -19,19 +19,14 @@ class LoggedHomePageController {
   Future<void> getAll() async {
     store.setLoading = true;
     final _result = await getAllPostsUsecase.loadAll();
-    _result.fold(
-        (l) => {store.setError = l.message ?? "Ops... an error has occured. Try again later."},
-        (r) => {store.setAllPosts = r});
+    _result.fold((l) => {store.setError = l.message}, (r) => {store.setAllPosts = r});
     store.setLoading = false;
   }
 
   Future<void> getPostsByUser() async {
     store.setMyPostsLoading = true;
     final _result = await getPostsByUserUsecase();
-    _result.fold(
-        (l) =>
-            {store.setMyPostsError = l.message ?? "Ops... an error has occured. Try again later."},
-        (r) => {store.setMyPosts = r});
+    _result.fold((l) => {store.setMyPostsError = l.message}, (r) => {store.setMyPosts = r});
     store.setMyPostsLoading = false;
   }
 }
