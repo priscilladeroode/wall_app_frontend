@@ -25,4 +25,9 @@ class LocalStorageRepositoryImpl implements LocalStorageRepository {
     }
     return null;
   }
+
+  @override
+  Future<void> clearLocalStorage() async {
+    await storage.clearLocalStorage();
+  }
 }
