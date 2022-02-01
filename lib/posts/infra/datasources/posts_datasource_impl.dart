@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import '../../../auth/presentation/stores/auth_store.dart';
 
+import '../../../auth/presentation/stores/auth_store.dart';
 import '../../data/datasources/posts_datasource.dart';
+import '../../data/models/post_request_model.dart';
 import '../../data/models/post_response_model.dart';
 import '../../domain/failures/posts_failures.dart';
 
@@ -40,6 +41,20 @@ class PostsDatasourceImpl implements PostsDatasource {
         }));
     if (result.statusCode == 200) {
       return PostResponseModel.fromJsonList(result.data);
+    }
+    throw PostsDatasourceError();
+  }
+
+  @override
+  Future<bool> createPost(PostRequestModel post) async {
+    final _result = await dio.post('$endpoint/posts',
+        options: Options(headers: {
+          "x-access-token": _authStore.accessToken,
+        }),
+        data: post.toJson(post));
+
+    if (_result.statusCode == 200 || _result.statusCode == 201) {
+      return true;
     }
     throw PostsDatasourceError();
   }
