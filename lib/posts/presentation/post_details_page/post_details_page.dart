@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 import '../../../commons/breakpoints.dart';
-import '../../../wall_ui.dart/components/wall_app_bar/wall_app_bar.dart';
-import '../../../wall_ui.dart/components/wall_error_widget.dart';
+import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui/components/wall_error_widget.dart';
 import 'post_details_page_controller.dart';
 
 class PostDetailsPage extends StatefulWidget {

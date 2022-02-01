@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../commons/breakpoints.dart';
-import '../../../../wall_ui.dart/components/wall_post_card.dart';
+import '../../../../wall_ui/components/wall_post_card.dart';
 import '../../../domain/entities/post_response_entity.dart';
 
 class CardsGridWidget extends StatelessWidget {

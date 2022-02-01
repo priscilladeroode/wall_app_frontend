@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../commons/breakpoints.dart';
-import '../../../wall_ui.dart/base_components/wall_page_title.dart';
-import '../../../wall_ui.dart/components/wall_app_bar/wall_app_bar.dart';
-import '../../../wall_ui.dart/tokens/wall_colors.dart';
+import '../../../wall_ui/base_components/wall_page_title.dart';
+import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui/tokens/wall_colors.dart';
 import '../home_page/components/cards_grid_widget.dart';
 
 import 'logged_home_page_controller.dart';

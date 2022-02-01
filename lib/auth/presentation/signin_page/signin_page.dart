@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../commons/breakpoints.dart';
-import '../../../wall_ui.dart/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
 import '../components/auth_image_widget.dart';
 import 'components/sign_in_form/signin_form.dart';
 

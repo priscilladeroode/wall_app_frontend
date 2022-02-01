@@ -3,7 +3,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/commons/local_storage/domain/entities/user_entity.dart';
 import 'package:wall_app_frontend/commons/local_storage/domain/repositories/local_storage_repository.dart';
 import 'package:wall_app_frontend/commons/local_storage/domain/usecases/get_user_usecase.dart';
-import 'package:wall_app_frontend/commons/local_storage/domain/usecases/save_user_usecase.dart';
 
 class LocalStorageRepositoryMock extends Mock implements LocalStorageRepository {}
 

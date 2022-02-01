@@ -14,7 +14,7 @@ import 'commons/local_storage/domain/usecases/save_user_usecase.dart';
 import 'commons/local_storage/infra/storages/shared_preferences_storage.dart';
 import 'posts/posts_module.dart';
 import 'splash/splash_module.dart';
-import 'wall_ui.dart/components/wall_app_bar/wall_app_bar_controller.dart';
+import 'wall_ui/components/wall_app_bar/wall_app_bar_controller.dart';
 
 class AppModule extends Module {
   @override

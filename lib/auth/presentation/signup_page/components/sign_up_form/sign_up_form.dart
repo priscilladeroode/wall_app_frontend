@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../../wall_ui.dart/tokens/wall_colors.dart';
+import '../../../../../wall_ui/tokens/wall_colors.dart';
 import 'sign_up_form_controller.dart';
 
 class SignUpForm extends StatefulWidget {

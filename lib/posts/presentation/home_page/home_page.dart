@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../commons/breakpoints.dart';
-import '../../../wall_ui.dart/base_components/wall_page_title.dart';
-import '../../../wall_ui.dart/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui/base_components/wall_page_title.dart';
+import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
 import 'components/cards_grid_widget.dart';
 import 'home_page_controller.dart';
 

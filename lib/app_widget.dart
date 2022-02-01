@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'app_controller.dart';
 
-import 'wall_ui.dart/themes/wall_themes.dart';
+import 'wall_ui/themes/wall_themes.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({Key? key}) : super(key: key);
