@@ -14,6 +14,9 @@ abstract class AuthStoreBase with Store {
   @observable
   String? accessToken;
 
+  @computed
+  String get firstName => name != null ? name!.split(" ").first : " ";
+
   set setName(String? value) => name = value;
 
   set setEmail(String? value) => email = value;

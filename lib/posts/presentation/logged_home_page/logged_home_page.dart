@@ -51,7 +51,7 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
             Observer(
               builder: (context) {
                 return WallPageTitle(
-                  title: 'Hi, ${controller.authStore.name}!',
+                  title: 'Hi, ${controller.authStore.firstName}!',
                   device: breakpoint.device,
                 );
               },

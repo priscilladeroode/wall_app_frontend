@@ -9,6 +9,14 @@ part of 'auth_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AuthStore on AuthStoreBase, Store {
+  Computed<String>? _$firstNameComputed;
+
+  @override
+  String get firstName =>
+      (_$firstNameComputed ??= Computed<String>(() => super.firstName,
+              name: 'AuthStoreBase.firstName'))
+          .value;
+
   final _$nameAtom = Atom(name: 'AuthStoreBase.name');
 
   @override
@@ -59,7 +67,8 @@ mixin _$AuthStore on AuthStoreBase, Store {
     return '''
 name: ${name},
 email: ${email},
-accessToken: ${accessToken}
+accessToken: ${accessToken},
+firstName: ${firstName}
     ''';
   }
 }
