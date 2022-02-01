@@ -43,6 +43,7 @@ class PostsModule extends Module {
         ChildRoute(Modular.initialRoute,
             child: (_, __) => const HomePage(), guards: [NoAuthGuard()]),
         ChildRoute('/myHome', child: (_, __) => const LoggedHomePage(), guards: [AuthGuard()]),
+        ChildRoute('/newPost', child: (_, __) => const CreatePostPage(), guards: [AuthGuard()]),
         ChildRoute('/post/:owner/:id/',
             child: (_, args) =>
                 PostDetailsPage(postId: args.params['id'], owner: args.params['owner'])),

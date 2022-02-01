@@ -26,7 +26,7 @@ class WallPageTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 72),
+      padding: EdgeInsets.symmetric(vertical: device == LayoutClass.desktop ? 72 : 24),
       child: Text(title, style: getStyle(context)),
     );
   }

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import '../../../commons/breakpoints.dart';
 import '../../../wall_ui/base_components/wall_page_title.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
 import '../../../wall_ui/tokens/wall_colors.dart';
 import '../home_page/components/cards_grid_widget.dart';
-
 import 'logged_home_page_controller.dart';
 
 class LoggedHomePage extends StatefulWidget {
@@ -56,6 +55,13 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
                 );
               },
             ),
+            if (kIsWeb)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: ElevatedButton(
+                    onPressed: () => Modular.to.pushNamed('/home/newPost'),
+                    child: Text('Add new post'.toUpperCase())),
+              ),
             Expanded(
               child: Column(
                 children: [
@@ -115,6 +121,12 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
           ],
         ),
       ),
+      floatingActionButton: !kIsWeb
+          ? FloatingActionButton(
+              onPressed: () => Modular.to.pushNamed('/home/newPost'),
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }
