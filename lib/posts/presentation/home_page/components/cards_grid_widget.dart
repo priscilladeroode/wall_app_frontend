@@ -61,7 +61,11 @@ class CardsGridWidget extends StatelessWidget {
                 children: [
                   Text('No post yet. Why don\'t you open this wall?',
                       style: Theme.of(context).textTheme.headline6),
-                  Image.asset("assets/images/empty_list.png"),
+                  Expanded(
+                    child: Image.asset(
+                      "assets/images/empty_list.png",
+                    ),
+                  ),
                 ],
               );
   }
