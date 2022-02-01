@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../../../commons/breakpoints.dart';
 import '../../../wall_ui/base_components/wall_page_title.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
