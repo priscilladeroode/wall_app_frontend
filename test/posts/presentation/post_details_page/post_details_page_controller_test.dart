@@ -6,7 +6,7 @@ import 'package:wall_app_frontend/posts/domain/usecases/get_post_by_id.dart';
 import 'package:wall_app_frontend/posts/presentation/post_details_page/post_details_page_controller.dart';
 import 'package:wall_app_frontend/posts/presentation/post_details_page/stores/post_details_page_store.dart';
 
-import '../../data/respositories/mocks/posts_repository_mocks.dart';
+import '../../mocks/posts_mocks.dart';
 
 class PostDetailsPageStoreMock extends Mock implements PostDetailsPageStore {}
 

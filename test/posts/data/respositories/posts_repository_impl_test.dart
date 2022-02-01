@@ -3,26 +3,32 @@ import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/commons/either.dart';
 import 'package:wall_app_frontend/posts/data/datasources/posts_datasource.dart';
 import 'package:wall_app_frontend/posts/data/mappers/post_mapper.dart';
+import 'package:wall_app_frontend/posts/data/mappers/post_request_mapper.dart';
 import 'package:wall_app_frontend/posts/data/respositories/posts_repository_impl.dart';
 import 'package:wall_app_frontend/posts/domain/entities/post_response_entity.dart';
 import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
 import 'package:wall_app_frontend/posts/domain/repositories/posts_respository.dart';
 
-import 'mocks/posts_repository_mocks.dart';
+import '../../mocks/posts_mocks.dart';
 
 class PostsDatasourceMock extends Mock implements PostsDatasource {}
 
 class PostMapperMock extends Mock implements PostMapper {}
 
+class PostRequestMapperMock extends Mock implements PostRequestMapper {}
+
 void main() {
   late PostsDatasource datasource;
   late PostsRepository repository;
   late PostMapper mapper;
+  late PostRequestMapper mapperFromDomain;
 
   setUpAll(() {
     datasource = PostsDatasourceMock();
     mapper = PostMapperMock();
-    repository = PostsRepositoryImpl(datasource: datasource, mapper: mapper);
+    mapperFromDomain = PostRequestMapperMock();
+    repository = PostsRepositoryImpl(
+        datasource: datasource, mapper: mapper, mapperFromDomain: mapperFromDomain);
   });
 
   group('loadAll', () {

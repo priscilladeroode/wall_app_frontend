@@ -6,7 +6,7 @@ import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
 import 'package:wall_app_frontend/posts/domain/repositories/posts_respository.dart';
 import 'package:wall_app_frontend/posts/domain/usecases/get_all_posts_usecase.dart';
 
-import '../../data/respositories/mocks/posts_repository_mocks.dart';
+import '../../mocks/posts_mocks.dart';
 
 class PostsRepositoryMock extends Mock implements PostsRepository {}
 

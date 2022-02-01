@@ -6,7 +6,7 @@ import 'package:wall_app_frontend/posts/domain/usecases/get_all_posts_usecase.da
 import 'package:wall_app_frontend/posts/presentation/home_page/home_page_controller.dart';
 import 'package:wall_app_frontend/posts/presentation/home_page/stores/home_page_store.dart';
 
-import '../../data/respositories/mocks/posts_repository_mocks.dart';
+import '../../mocks/posts_mocks.dart';
 
 class HomePageStoreMock extends Mock implements HomePageStore {}
 
