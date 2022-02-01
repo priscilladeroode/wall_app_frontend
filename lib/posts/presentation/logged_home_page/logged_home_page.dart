@@ -25,6 +25,7 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
   @override
   void initState() {
     controller.getAll();
+    controller.getPostsByUser();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -96,7 +97,16 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
                           );
                         },
                       ),
-                      Text('oi'),
+                      Observer(
+                        builder: (context) {
+                          return CardsGridWidget(
+                            device: breakpoint.device,
+                            loading: controller.store.myPostsLoading,
+                            posts: controller.store.myPosts,
+                            owner: true,
+                          );
+                        },
+                      ),
                     ]),
                   )
                 ],

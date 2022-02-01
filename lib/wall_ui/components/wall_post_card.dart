@@ -12,13 +12,15 @@ class WallPostCard extends StatefulWidget {
   final LayoutClass device;
   final bool isNew;
   final VoidCallback? onTap;
-  const WallPostCard({
-    Key? key,
-    required this.post,
-    required this.device,
-    this.isNew = false,
-    this.onTap,
-  }) : super(key: key);
+  final bool owner;
+  const WallPostCard(
+      {Key? key,
+      required this.post,
+      required this.device,
+      this.isNew = false,
+      this.onTap,
+      this.owner = false})
+      : super(key: key);
 
   @override
   State<WallPostCard> createState() => _WallPostCardState();

@@ -6,6 +6,7 @@ import 'data/mappers/post_mapper.dart';
 import 'data/respositories/posts_repository_impl.dart';
 import 'domain/usecases/get_all_posts_usecase.dart';
 import 'domain/usecases/get_post_by_id.dart';
+import 'domain/usecases/get_posts_by_user_usecase.dart';
 import 'infra/datasources/posts_datasource_impl.dart';
 import 'presentation/home_page/home_page.dart';
 import 'presentation/home_page/home_page_controller.dart';
@@ -20,9 +21,10 @@ import 'presentation/post_details_page/stores/post_details_page_store.dart';
 class PostsModule extends Module {
   @override
   List<Bind> get binds => [
+        Bind.factory((i) => GetPostsByUserUseCaseImpl(i())),
         Bind.factory((i) => LoggedHomePageStore()),
-        Bind.factory(
-            (i) => LoggedHomePageController(getAllPostsUsecase: i(), store: i(), authStore: i())),
+        Bind.factory((i) => LoggedHomePageController(
+            getAllPostsUsecase: i(), store: i(), authStore: i(), getPostsByUserUsecase: i())),
         Bind.factory<PostDetailsPageStore>((i) => PostDetailsPageStore()),
         Bind.factory<PostDetailsPageController>(
             (i) => PostDetailsPageController(store: i(), usecase: i())),
@@ -32,7 +34,7 @@ class PostsModule extends Module {
         Bind.factory<GetAllPostsUseCase>((i) => GetAllPostsUseCaseImpl(i())),
         Bind.factory((i) => PostsRepositoryImpl(datasource: i(), mapper: i())),
         Bind.factory((i) => PostMapper()),
-        Bind.factory((i) => PostsDatasourceImpl(i())),
+        Bind.factory((i) => PostsDatasourceImpl(i(), i())),
       ];
 
   @override
@@ -40,7 +42,11 @@ class PostsModule extends Module {
         ChildRoute(Modular.initialRoute,
             child: (_, __) => const HomePage(), guards: [NoAuthGuard()]),
         ChildRoute('/myHome', child: (_, __) => const LoggedHomePage(), guards: [AuthGuard()]),
-        ChildRoute('/post/:id', child: (_, args) => PostDetailsPage(postId: args.params['id'])),
+        ChildRoute('/post/:id',
+            child: (_, args) => PostDetailsPage(
+                  postId: args.params['id'],
+                  owner: args.data,
+                )),
         RedirectRoute('/redirect', to: '/home'),
       ];
 }
