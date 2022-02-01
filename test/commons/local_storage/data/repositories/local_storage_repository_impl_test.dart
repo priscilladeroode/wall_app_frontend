@@ -55,4 +55,16 @@ void main() {
 
     expect(_result, false);
   });
+
+  test('''
+    Given a valid call,
+    When storage dont return,
+    Then should not return.
+  ''', () async {
+    when(() => _storage.clearLocalStorage()).thenAnswer((_) async => {});
+
+    await _repository.clearLocalStorage();
+
+    verify(() => _storage.clearLocalStorage()).called(1);
+  });
 }
