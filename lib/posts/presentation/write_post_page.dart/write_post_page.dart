@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../commons/breakpoints.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui/components/wall_theme_mode_switch/wall_theme_mode_switch.dart';
 import '../components/post_form/post_form.dart';
 import 'write_post_page_controller.dart';
 
@@ -38,11 +39,17 @@ class _WritePostPageState extends ModularState<WritePostPage, WritePostPageContr
           width: breakpoint.screenWidth,
           height: breakpoint.screenHeight,
           child: Center(
-            child: PostForm(
-              store: controller.store,
-              onFormSend:
-                  (widget.id == null || widget.id!.isEmpty) ? controller.create : controller.update,
-              breakpoint: breakpoint,
+            child: Column(
+              children: [
+                const WallThemeModeSwitch(),
+                PostForm(
+                  store: controller.store,
+                  onFormSend: (widget.id == null || widget.id!.isEmpty)
+                      ? controller.create
+                      : controller.update,
+                  breakpoint: breakpoint,
+                ),
+              ],
             ),
           ),
         ),

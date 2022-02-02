@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../commons/breakpoints.dart';
 import '../../../wall_ui/base_components/wall_page_title.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui/components/wall_theme_mode_switch/wall_theme_mode_switch.dart';
 import 'components/cards_grid_widget.dart';
 import 'home_page_controller.dart';
 
@@ -42,6 +43,7 @@ class _HomePageState extends ModularState<HomePage, HomePageController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const WallThemeModeSwitch(),
             WallPageTitle(
               title: 'Check our new posts!',
               device: breakpoint.device,

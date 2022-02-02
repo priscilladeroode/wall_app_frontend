@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'app_controller.dart';
 
@@ -20,11 +21,13 @@ class _AppWidgetState extends ModularState<AppWidget, AppController> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wall App',
-      theme: WallThemes.light,
-      darkTheme: WallThemes.dark,
-      themeMode: ThemeMode.light,
-    ).modular();
+    return Observer(builder: (context) {
+      return MaterialApp(
+        title: 'Wall App',
+        theme: WallThemes.light,
+        darkTheme: WallThemes.dark,
+        themeMode: controller.store.darkMode ? ThemeMode.dark : ThemeMode.light,
+      ).modular();
+    });
   }
 }

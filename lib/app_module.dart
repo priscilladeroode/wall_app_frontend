@@ -12,16 +12,20 @@ import 'commons/local_storage/domain/usecases/clear_user_usecase.dart';
 import 'commons/local_storage/domain/usecases/get_user_usecase.dart';
 import 'commons/local_storage/domain/usecases/save_user_usecase.dart';
 import 'commons/local_storage/infra/storages/shared_preferences_storage.dart';
+import 'commons/stores/app_store.dart';
 import 'posts/posts_module.dart';
 import 'splash/splash_module.dart';
 import 'wall_ui/components/wall_app_bar/wall_app_bar_controller.dart';
+import 'wall_ui/components/wall_theme_mode_switch/wall_theme_mode_switch_controller.dart';
 
 class AppModule extends Module {
   @override
   List<Bind> get binds => [
         Bind.factory((i) => Dio()),
         Bind.singleton((i) => AuthStore()),
-        Bind.lazySingleton((i) => AppController(i(), i())),
+        Bind.singleton((i) => AppStore()),
+        Bind.lazySingleton((i) => AppController(i(), i(), i())),
+        Bind.lazySingleton((i) => WallThemeModeSwitcherController(i())),
         Bind.lazySingleton((i) => WallAppBarController(i(), i())),
         Bind.factory((i) => ClearUserUseCaseImpl(i())),
         Bind.factory((i) => SaveUserUseCaseImpl(i())),

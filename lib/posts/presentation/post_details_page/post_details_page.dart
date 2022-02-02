@@ -8,6 +8,7 @@ import '../../../commons/breakpoints.dart';
 import '../../../wall_ui/base_components/wall_loader.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
 import '../../../wall_ui/components/wall_error_widget.dart';
+import '../../../wall_ui/components/wall_theme_mode_switch/wall_theme_mode_switch.dart';
 import 'components/bubble_floating.dart';
 import 'components/delete_dialog.dart';
 import 'post_details_page_controller.dart';
@@ -62,6 +63,7 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const WallThemeModeSwitch(),
                             Padding(
                               padding: const EdgeInsets.only(top: 70, bottom: 16),
                               child: Text(

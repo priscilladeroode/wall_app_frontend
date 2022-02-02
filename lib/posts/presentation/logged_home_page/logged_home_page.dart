@@ -7,6 +7,7 @@ import '../../../commons/breakpoints.dart';
 import '../../../wall_ui/base_components/wall_elevated_button.dart';
 import '../../../wall_ui/base_components/wall_page_title.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
+import '../../../wall_ui/components/wall_theme_mode_switch/wall_theme_mode_switch.dart';
 import '../../../wall_ui/tokens/wall_colors.dart';
 import '../home_page/components/cards_grid_widget.dart';
 import 'logged_home_page_controller.dart';
@@ -49,6 +50,7 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const WallThemeModeSwitch(),
             Observer(
               builder: (context) {
                 return WallPageTitle(

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../../../wall_ui/base_components/wall_elevated_button.dart';
 
+import '../../../../../wall_ui/base_components/wall_elevated_button.dart';
+import '../../../../../wall_ui/components/wall_theme_mode_switch/wall_theme_mode_switch.dart';
 import '../../../../../wall_ui/tokens/wall_colors.dart';
 import 'sign_up_form_controller.dart';
 
@@ -40,6 +41,7 @@ class _SignUpFormState extends ModularState<SignUpForm, SignUpFormController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const WallThemeModeSwitch(),
                   Text(
                     'Register',
                     style: theme.textTheme.headline3,

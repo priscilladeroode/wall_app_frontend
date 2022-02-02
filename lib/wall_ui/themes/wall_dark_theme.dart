@@ -4,10 +4,10 @@ import '../tokens/wall_colors.dart';
 import '../tokens/wall_typography.dart';
 
 final darkTheme = ThemeData(
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
   primaryColor: WallColors.primaryColor400,
   primarySwatch: WallColors.materialColor,
-  scaffoldBackgroundColor: WallColors.neutral100,
+  scaffoldBackgroundColor: WallColors.neutral900,
   errorColor: WallColors.error700,
   appBarTheme: const AppBarTheme(
     backgroundColor: WallColors.neutral800,
@@ -18,6 +18,8 @@ final darkTheme = ThemeData(
       color: WallColors.primaryColor400,
     ),
   ),
+  toggleableActiveColor: WallColors.primaryColor400,
+  cardColor: WallColors.neutral800,
   textTheme: TextTheme(
     headline1: WallTypography.h1.copyWith(color: WallColors.neutral50),
     headline2: WallTypography.h2.copyWith(color: WallColors.neutral50),
@@ -32,6 +34,7 @@ final darkTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
+      primary: WallColors.primaryColor400,
       padding: const EdgeInsets.symmetric(horizontal: 32),
       minimumSize: const Size(40, 48),
       textStyle: WallTypography.elevatedButton.copyWith(
@@ -42,10 +45,12 @@ final darkTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       minimumSize: const Size(40, 48),
-      textStyle: WallTypography.textButton,
+      textStyle: WallTypography.textButton.copyWith(color: WallColors.primaryColor400),
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: WallColors.neutral800,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
     ),
