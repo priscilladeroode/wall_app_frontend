@@ -14,12 +14,12 @@ class PostsRepositoryFailure extends PostsFailures {
 
 class InvalidTitleLength extends PostsFailures {
   @override
-  String get message => 'Title must be between 10 and 150 characters.';
+  String get message => 'Title must be between 3 and 150 characters.';
 }
 
 class InvalidContentLength extends PostsFailures {
   @override
-  String get message => 'Content must be between 200 and 3000 characters.';
+  String get message => 'Content must be between 10 and 3000 characters.';
 }
 
 class Unauthorized extends PostsFailures {

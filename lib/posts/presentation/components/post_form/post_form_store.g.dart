@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_post_page_store.dart';
+part of 'post_form_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,23 @@ part of 'create_post_page_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$CreatePostPageStore on CreatePostPageStoreBase, Store {
-  final _$titleAtom = Atom(name: 'CreatePostPageStoreBase.title');
+mixin _$PostFormStore on PostFormStoreBase, Store {
+  final _$idAtom = Atom(name: 'PostFormStoreBase.id');
+
+  @override
+  String get id {
+    _$idAtom.reportRead();
+    return super.id;
+  }
+
+  @override
+  set id(String value) {
+    _$idAtom.reportWrite(value, super.id, () {
+      super.id = value;
+    });
+  }
+
+  final _$titleAtom = Atom(name: 'PostFormStoreBase.title');
 
   @override
   TextEditingController get title {
@@ -24,7 +39,7 @@ mixin _$CreatePostPageStore on CreatePostPageStoreBase, Store {
     });
   }
 
-  final _$contentAtom = Atom(name: 'CreatePostPageStoreBase.content');
+  final _$contentAtom = Atom(name: 'PostFormStoreBase.content');
 
   @override
   TextEditingController get content {
@@ -39,7 +54,7 @@ mixin _$CreatePostPageStore on CreatePostPageStoreBase, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: 'CreatePostPageStoreBase.loading');
+  final _$loadingAtom = Atom(name: 'PostFormStoreBase.loading');
 
   @override
   bool get loading {
@@ -54,7 +69,7 @@ mixin _$CreatePostPageStore on CreatePostPageStoreBase, Store {
     });
   }
 
-  final _$errorAtom = Atom(name: 'CreatePostPageStoreBase.error');
+  final _$errorAtom = Atom(name: 'PostFormStoreBase.error');
 
   @override
   String get error {
@@ -72,6 +87,7 @@ mixin _$CreatePostPageStore on CreatePostPageStoreBase, Store {
   @override
   String toString() {
     return '''
+id: ${id},
 title: ${title},
 content: ${content},
 loading: ${loading},

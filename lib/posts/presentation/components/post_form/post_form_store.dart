@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
-part 'create_post_page_store.g.dart';
+part 'post_form_store.g.dart';
 
-class CreatePostPageStore = CreatePostPageStoreBase with _$CreatePostPageStore;
+class PostFormStore = PostFormStoreBase with _$PostFormStore;
 
-abstract class CreatePostPageStoreBase with Store {
+abstract class PostFormStoreBase with Store {
+  @observable
+  String id = '';
+
   @observable
   TextEditingController title = TextEditingController();
 
@@ -21,4 +24,6 @@ abstract class CreatePostPageStoreBase with Store {
   set setError(String message) => error = message;
 
   set setLoading(bool value) => loading = value;
+
+  set setId(String value) => id = value;
 }

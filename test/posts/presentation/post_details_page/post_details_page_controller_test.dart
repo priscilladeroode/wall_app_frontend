@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:wall_app_frontend/commons/either.dart';
 import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
+import 'package:wall_app_frontend/posts/domain/usecases/delete_post_usecase.dart';
 import 'package:wall_app_frontend/posts/domain/usecases/get_post_by_id.dart';
 import 'package:wall_app_frontend/posts/presentation/post_details_page/post_details_page_controller.dart';
 import 'package:wall_app_frontend/posts/presentation/post_details_page/stores/post_details_page_store.dart';
@@ -12,15 +13,20 @@ class PostDetailsPageStoreMock extends Mock implements PostDetailsPageStore {}
 
 class GetPostByIdUseCaseMock extends Mock implements GetPostById {}
 
+class DeletePostUseCaseMock extends Mock implements DeletePostUseCase {}
+
 void main() {
   late PostDetailsPageStore _store;
   late GetPostById _usecase;
   late PostDetailsPageController _controller;
+  late DeletePostUseCase _deletePostUseCase;
 
   setUpAll(() {
     _store = PostDetailsPageStoreMock();
     _usecase = GetPostByIdUseCaseMock();
-    _controller = PostDetailsPageController(usecase: _usecase, store: _store);
+    _deletePostUseCase = DeletePostUseCaseMock();
+    _controller = PostDetailsPageController(
+        usecase: _usecase, store: _store, deletePostUseCase: _deletePostUseCase);
   });
   test('''
     Given a valid call to method getPost,

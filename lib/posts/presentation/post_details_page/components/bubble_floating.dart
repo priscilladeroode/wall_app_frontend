@@ -1,5 +1,6 @@
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../wall_ui/tokens/wall_colors.dart';
 import '../post_details_page_controller.dart';
@@ -59,15 +60,12 @@ class _BubbleFloatingState extends State<BubbleFloating> with SingleTickerProvid
           ),
         ),
         Bubble(
-          title: "Edit",
-          iconColor: Colors.white,
-          bubbleColor: theme.primaryColor,
-          icon: Icons.edit_outlined,
-          titleStyle: theme.textTheme.button!,
-          onPress: () {
-            _animationController.reverse();
-          },
-        ),
+            title: "Edit",
+            iconColor: Colors.white,
+            bubbleColor: theme.primaryColor,
+            icon: Icons.edit_outlined,
+            titleStyle: theme.textTheme.button!,
+            onPress: () => Modular.to.pushNamed('/home/write/${widget.controller.store.post!.id}')),
       ],
       animation: _animation,
       onPress: () => _animationController.isCompleted

@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 import '../../../commons/breakpoints.dart';
+import '../../../wall_ui/base_components/wall_loader.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
 import '../../../wall_ui/components/wall_error_widget.dart';
 import 'components/bubble_floating.dart';
@@ -48,12 +49,7 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
         child: Observer(
           builder: (context) {
             return controller.store.loading
-                ? SizedBox(
-                    height: breakpoint.screenHeight,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
+                ? SizedBox(height: breakpoint.screenHeight, child: const WallLoader.large())
                 : controller.store.error.isNotEmpty
                     ? WallErrorWidget(
                         errorMessage: controller.store.error, screenHeight: breakpoint.screenHeight)
@@ -103,7 +99,7 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
                                 ],
                               ),
                             ),
-                            if (kIsWeb)
+                            if (kIsWeb && widget.owner == "true")
                               Wrap(
                                 children: [
                                   OutlinedButton.icon(
@@ -118,7 +114,10 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
                                   ),
                                   const SizedBox(width: 16),
                                   ElevatedButton.icon(
-                                      onPressed: () {},
+                                      onPressed: () => Modular.to
+                                          .pushNamed('/home/write/${controller.store.post!.id}')
+                                          .then((value) =>
+                                              controller.getPost(controller.store.post!.id)),
                                       icon: const Icon(Icons.edit_outlined),
                                       label: Text('edit'.toUpperCase()))
                                 ],

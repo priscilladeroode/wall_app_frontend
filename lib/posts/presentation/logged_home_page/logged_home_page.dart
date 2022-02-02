@@ -60,7 +60,10 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: ElevatedButton(
-                    onPressed: () => Modular.to.pushNamed('/home/newPost'),
+                    onPressed: () => Modular.to.pushNamed('/home/write/').then((_) {
+                          controller.getAll();
+                          controller.getPostsByUser();
+                        }),
                     child: Text('Add new post'.toUpperCase())),
               ),
             Expanded(
@@ -132,7 +135,10 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
       ),
       floatingActionButton: !kIsWeb
           ? FloatingActionButton(
-              onPressed: () => Modular.to.pushNamed('/home/newPost'),
+              onPressed: () => Modular.to.pushNamed('/home/write/').then((_) {
+                controller.getAll();
+                controller.getPostsByUser();
+              }),
               child: const Icon(Icons.add),
             )
           : null,
