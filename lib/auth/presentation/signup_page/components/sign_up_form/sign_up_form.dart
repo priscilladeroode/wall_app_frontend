@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wall_app_frontend/wall_ui/base_components/wall_loader.dart';
 
 import '../../../../../wall_ui/tokens/wall_colors.dart';
 import 'sign_up_form_controller.dart';
@@ -129,14 +130,8 @@ class _SignUpFormState extends ModularState<SignUpForm, SignUpFormController> {
                               }
                             },
                       child: controller.store.loading
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(),
-                            )
-                          : Text(
-                              'Sign Up'.toUpperCase(),
-                            ),
+                          ? const WallLoader.small()
+                          : Text('Sign Up'.toUpperCase()),
                     ),
                   ),
                   const SizedBox(height: 48),

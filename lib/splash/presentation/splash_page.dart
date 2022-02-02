@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:wall_app_frontend/wall_ui/base_components/wall_loader.dart';
 import 'splash_page_controller.dart';
 
 class SplashPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SplashPageState extends ModularState<SplashPage, SplashController> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+      body: WallLoader.large(),
     );
   }
 }
