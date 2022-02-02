@@ -14,10 +14,10 @@ void main() {
     name: "develop",
     variables: {
       "baseUrl": kIsWeb
-          ? EnvConfig.Dev
+          ? EnvConfig.dev
           : Platform.isAndroid
-              ? EnvConfig.DevAndroid
-              : EnvConfig.Dev,
+              ? EnvConfig.devAndroid
+              : EnvConfig.dev,
     },
   );
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));

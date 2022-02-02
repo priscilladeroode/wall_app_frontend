@@ -9,7 +9,7 @@ import 'config/env.dart';
 void main() {
   FlavorConfig(
     name: "prod",
-    variables: {"baseUrl": EnvConfig.Prod},
+    variables: {"baseUrl": EnvConfig.prod},
   );
   runApp(ModularApp(module: AppModule(), child: const AppWidget()));
 }
