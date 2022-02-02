@@ -7,4 +7,5 @@ abstract class PostsDatasource {
   Future<PostResponseModel> loadById(String id);
   Future<List<PostResponseModel>> loadByUid();
   Future<bool> createPost(PostRequestModel post);
+  Future<bool> deletePost(String id);
 }

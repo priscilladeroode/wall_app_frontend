@@ -58,4 +58,18 @@ class PostsDatasourceImpl implements PostsDatasource {
     }
     throw PostsDatasourceError();
   }
+
+  @override
+  Future<bool> deletePost(String id) async {
+    final _result = await dio.delete(
+      '$endpoint/deleteById/$id',
+      options: Options(headers: {
+        "x-access-token": _authStore.accessToken,
+      }),
+    );
+    if (_result.statusCode == 200) {
+      return true;
+    }
+    throw PostsDatasourceError();
+  }
 }
