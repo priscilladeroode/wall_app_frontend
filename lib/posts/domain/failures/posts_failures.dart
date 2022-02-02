@@ -21,3 +21,8 @@ class InvalidContentLength extends PostsFailures {
   @override
   String get message => 'Content must be between 200 and 3000 characters.';
 }
+
+class Unauthorized extends PostsFailures {
+  @override
+  String get message => 'It seems like you are not the owner of this post.';
+}
