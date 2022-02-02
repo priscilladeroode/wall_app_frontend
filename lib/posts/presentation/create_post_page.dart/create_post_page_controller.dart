@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/svg.dart';
+import '../../../wall_ui/components/wall_success_dialog.dart';
 
 import '../../domain/entities/post_request_entity.dart';
 import '../../domain/usecases/create_post_usecase.dart';
@@ -20,29 +20,10 @@ class CreatePostPageController {
     _result.fold(
       (l) => store.setError = l.message,
       (r) => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text(
-            'Post created',
-            textAlign: TextAlign.center,
-          ),
-          content: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 350, maxHeight: 350),
-            child: SvgPicture.asset('assets/images/done.svg'),
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () => Modular.to.pop(),
-                  child: const Text('ok'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ).whenComplete(() => Modular.to.pop()),
+          context: context,
+          builder: (context) => const WallSuccessDialog(
+              title: 'Post created',
+              imagePath: 'assets/images/done.svg')).whenComplete(() => Modular.to.pop()),
     );
   }
 }

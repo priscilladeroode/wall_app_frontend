@@ -10,11 +10,13 @@ class CardsGridWidget extends StatelessWidget {
   final bool loading;
   final List<PostResponseEntity> posts;
   final bool owner;
+  final VoidCallback onPop;
   const CardsGridWidget({
     Key? key,
     required this.device,
     required this.loading,
     required this.posts,
+    required this.onPop,
     this.owner = false,
   }) : super(key: key);
 
@@ -54,7 +56,8 @@ class CardsGridWidget extends StatelessWidget {
                     isNew: index < 2,
                     post: posts[index],
                     onTap: () => Modular.to
-                        .pushNamed('/home/post/$owner/${posts[index].id}', arguments: owner),
+                        .pushNamed('/home/post/$owner/${posts[index].id}/', arguments: owner)
+                        .then((value) => onPop()),
                   );
                 },
               )

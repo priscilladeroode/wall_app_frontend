@@ -1,4 +1,4 @@
-import 'package:floating_action_bubble/floating_action_bubble.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 import '../../../commons/breakpoints.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
 import '../../../wall_ui/components/wall_error_widget.dart';
-import '../../../wall_ui/tokens/wall_colors.dart';
+import 'components/bubble_floating.dart';
+import 'components/delete_dialog.dart';
 import 'post_details_page_controller.dart';
 
 class PostDetailsPage extends StatefulWidget {
@@ -23,24 +24,10 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
     with SingleTickerProviderStateMixin {
   late Breakpoint breakpoint;
   late ThemeData theme;
-  late Animation<double> _animation;
-  late AnimationController _animationController;
-  bool expanded = false;
 
   @override
   void initState() {
     controller.getPost(widget.postId);
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 260),
-    );
-
-    final curvedAnimation = CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
-    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
-    _animationController.addListener(() => setState(() {
-          expanded = !expanded;
-        }));
-
     super.initState();
   }
 
@@ -116,6 +103,26 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
                                 ],
                               ),
                             ),
+                            if (kIsWeb)
+                              Wrap(
+                                children: [
+                                  OutlinedButton.icon(
+                                    onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (context) => DeleteDialog(
+                                        onPressed: () => controller.deletePost(context),
+                                      ),
+                                    ),
+                                    icon: const Icon(Icons.delete_outline),
+                                    label: Text('Delete'.toUpperCase()),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  ElevatedButton.icon(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.edit_outlined),
+                                      label: Text('edit'.toUpperCase()))
+                                ],
+                              ),
                             Padding(
                               padding: const EdgeInsets.only(top: 24, bottom: 40),
                               child: Text(
@@ -129,41 +136,8 @@ class _PostDetailsPageState extends ModularState<PostDetailsPage, PostDetailsPag
           },
         ),
       ),
-      floatingActionButton: (widget.owner == "true" && breakpoint.device == LayoutClass.mobile)
-          ? FloatingActionBubble(
-              items: <Bubble>[
-                Bubble(
-                  title: "Delete",
-                  iconColor: Colors.white,
-                  bubbleColor: theme.primaryColor,
-                  icon: Icons.delete_outline,
-                  titleStyle: theme.textTheme.button!,
-                  onPress: () {
-                    // Navigator.push(
-                    //     context, new MaterialPageRoute(builder: (BuildContext context) => Homepage()));
-                    // _animationController.reverse();
-                  },
-                ),
-                Bubble(
-                  title: "Edit",
-                  iconColor: Colors.white,
-                  bubbleColor: theme.primaryColor,
-                  icon: Icons.edit_outlined,
-                  titleStyle: theme.textTheme.button!,
-                  onPress: () {
-                    _animationController.reverse();
-                  },
-                ),
-              ],
-              animation: _animation,
-              onPress: () => _animationController.isCompleted
-                  ? _animationController.reverse()
-                  : _animationController.forward(),
-              iconColor: WallColors.neutral50,
-              iconData: _animationController.isCompleted ? Icons.remove : Icons.add,
-              backGroundColor: theme.primaryColor,
-            )
-          : null,
+      floatingActionButton:
+          (widget.owner == "true" && !kIsWeb) ? BubbleFloating(controller: controller) : null,
     );
   }
 }

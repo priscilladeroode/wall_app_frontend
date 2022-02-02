@@ -17,7 +17,10 @@ abstract class HomePageStoreBase with Store {
 
   set setError(String message) => error = message;
 
-  set setPosts(List<PostResponseEntity> newPosts) => posts.addAll(newPosts);
+  set setPosts(List<PostResponseEntity> newPosts) {
+    posts.clear();
+    posts.addAll(newPosts);
+  }
 
   set setLoading(bool value) => loading = value;
 }

@@ -53,6 +53,7 @@ class _HomePageState extends ModularState<HomePage, HomePageController> {
                     device: breakpoint.device,
                     loading: controller.store.loading,
                     posts: controller.store.posts,
+                    onPop: () => controller.getAll(),
                   ),
                 );
               },

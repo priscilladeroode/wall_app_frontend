@@ -49,4 +49,18 @@ final lightTheme = ThemeData(
       borderRadius: BorderRadius.circular(4),
     ),
   ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      minimumSize: const Size(40, 48),
+      primary: WallColors.error700,
+      side: const BorderSide(
+        width: 2,
+        color: WallColors.error700,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+    ),
+  ),
 );

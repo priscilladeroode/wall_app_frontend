@@ -28,9 +28,15 @@ abstract class LoggedHomePageStoreBase with Store {
 
   set setMyPostsError(String message) => myPostsError = message;
 
-  set setAllPosts(List<PostResponseEntity> newPosts) => allPosts.addAll(newPosts);
+  set setAllPosts(List<PostResponseEntity> newPosts) {
+    allPosts.clear();
+    allPosts.addAll(newPosts);
+  }
 
-  set setMyPosts(List<PostResponseEntity> newPosts) => myPosts.addAll(newPosts);
+  set setMyPosts(List<PostResponseEntity> newPosts) {
+    myPosts.clear();
+    myPosts.addAll(newPosts);
+  }
 
   set setLoading(bool value) => loading = value;
 

@@ -101,6 +101,10 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
                             device: breakpoint.device,
                             loading: controller.store.loading,
                             posts: controller.store.allPosts,
+                            onPop: () {
+                              controller.getAll();
+                              controller.getPostsByUser();
+                            },
                           );
                         },
                       ),
@@ -111,6 +115,10 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
                             loading: controller.store.myPostsLoading,
                             posts: controller.store.myPosts,
                             owner: true,
+                            onPop: () {
+                              controller.getAll();
+                              controller.getPostsByUser();
+                            },
                           );
                         },
                       ),
