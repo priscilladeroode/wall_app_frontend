@@ -96,4 +96,28 @@ class PostsRepositoryImpl implements PostsRepository {
       return left(PostsRepositoryFailure());
     }
   }
+
+  @override
+  Future<Either<PostsFailures, bool>> updatePost(PostRequestEntity post) async {
+    try {
+      final _model = mapperFromDomain.handle(post);
+      final _result = await datasource.updatePost(_model);
+      return right(_result);
+    } on DioError catch (e) {
+      switch (e.response?.data['errorCode']) {
+        case 'length_error_title':
+          return left(InvalidTitleLength());
+        case 'length_error_content':
+          return left(InvalidContentLength());
+        case 'unauthorized':
+          return left(Unauthorized());
+        default:
+          return left(PostsRepositoryFailure());
+      }
+    } on PostsFailures catch (e) {
+      return left(e);
+    } catch (e) {
+      return left(PostsRepositoryFailure());
+    }
+  }
 }
