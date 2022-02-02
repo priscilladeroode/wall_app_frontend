@@ -23,7 +23,7 @@ class SignUpFormController {
     final _result = await usecase(
       SignUpRequestEntity(
         email: store.emailController.text,
-        name: store.fullNameController.text,
+        name: store.fullNameController.text.trim(),
         password: store.passwordController.text.toLowerCase(),
         passwordConfirmation: store.passwordConfirmationController.text,
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../../wall_ui/base_components/wall_elevated_button.dart';
@@ -75,6 +76,7 @@ class _SignInFormState extends ModularState<SignInForm, SignInFormController> {
                     decoration: const InputDecoration(
                       label: Text('E-mail'),
                     ),
+                    inputFormatters: [FilteringTextInputFormatter(RegExp("[A-Z ]"), allow: false)],
                     validator: (value) => controller.validateEmail(value),
                   ),
                   const SizedBox(height: 16),
@@ -82,6 +84,8 @@ class _SignInFormState extends ModularState<SignInForm, SignInFormController> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: controller.store.passwordController,
                     obscureText: controller.store.passwordObscure,
+                    onChanged: (value) => value.replaceAll(RegExp(r"\s\b|\b\s"), ""),
+                    inputFormatters: [FilteringTextInputFormatter(RegExp("[ \"]"), allow: false)],
                     decoration: InputDecoration(
                       label: const Text('Password'),
                       suffixIcon: IconButton(
