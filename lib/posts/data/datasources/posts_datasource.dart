@@ -8,4 +8,5 @@ abstract class PostsDatasource {
   Future<List<PostResponseModel>> loadByUid();
   Future<bool> createPost(PostRequestModel post);
   Future<bool> deletePost(String id);
+  Future<bool> updatePost(PostRequestModel post);
 }

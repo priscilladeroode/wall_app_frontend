@@ -72,4 +72,18 @@ class PostsDatasourceImpl implements PostsDatasource {
     }
     throw PostsDatasourceError();
   }
+
+  @override
+  Future<bool> updatePost(PostRequestModel post) async {
+    final _result = await dio.put('$endpoint/posts',
+        options: Options(headers: {
+          "x-access-token": _authStore.accessToken,
+        }),
+        data: post.toJson(post));
+
+    if (_result.statusCode == 200 || _result.statusCode == 201) {
+      return true;
+    }
+    throw PostsDatasourceError();
+  }
 }
