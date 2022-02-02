@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../commons/breakpoints.dart';
-import '../../../../wall_ui/base_components/wall_loader.dart';
+import '../../../../wall_ui/base_components/wall_elevated_button.dart';
 import '../../../../wall_ui/base_components/wall_page_title.dart';
 import '../../../domain/failures/posts_failures.dart';
 import 'post_form_store.dart';
@@ -71,15 +71,14 @@ class PostForm extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Observer(builder: (context) {
-                return ElevatedButton(
-                  onPressed: store.loading
-                      ? null
-                      : () {
-                          if (postFormKey.currentState!.validate()) {
-                            onFormSend(context);
-                          }
-                        },
-                  child: store.loading ? const WallLoader.small() : Text('Save'.toUpperCase()),
+                return WallElevatedButton(
+                  label: 'Save',
+                  loading: store.loading,
+                  onPressed: () {
+                    if (postFormKey.currentState!.validate()) {
+                      onFormSend(context);
+                    }
+                  },
                 );
               })
             ],

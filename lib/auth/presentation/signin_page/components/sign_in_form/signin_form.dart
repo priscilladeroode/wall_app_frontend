@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:wall_app_frontend/wall_ui/base_components/wall_loader.dart';
+import '../../../../../wall_ui/base_components/wall_elevated_button.dart';
 
 import '../../../../../wall_ui/tokens/wall_colors.dart';
 import 'signin_form_controller.dart';
@@ -94,20 +94,15 @@ class _SignInFormState extends ModularState<SignInForm, SignInFormController> {
                     validator: (value) => controller.validatePassword(value),
                   ),
                   const SizedBox(height: 40),
-                  SizedBox(
+                  WallElevatedButton(
                     width: double.maxFinite,
-                    child: ElevatedButton(
-                      onPressed: controller.store.loading
-                          ? null
-                          : () {
-                              if (_formKey.currentState!.validate()) {
-                                controller.signIn();
-                              }
-                            },
-                      child: controller.store.loading
-                          ? const WallLoader.small()
-                          : Text('Sign In'.toUpperCase()),
-                    ),
+                    label: 'Sign In',
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        controller.signIn();
+                      }
+                    },
+                    loading: controller.store.loading,
                   ),
                   const SizedBox(height: 48),
                   Row(

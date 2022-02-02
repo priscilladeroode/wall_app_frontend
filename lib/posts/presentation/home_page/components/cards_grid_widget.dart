@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:wall_app_frontend/wall_ui/base_components/wall_loader.dart';
 
 import '../../../../commons/breakpoints.dart';
+import '../../../../wall_ui/base_components/wall_loader.dart';
 import '../../../../wall_ui/components/wall_post_card.dart';
 import '../../../domain/entities/post_response_entity.dart';
 

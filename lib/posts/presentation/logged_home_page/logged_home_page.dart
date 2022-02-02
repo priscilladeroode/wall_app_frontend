@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../commons/breakpoints.dart';
+import '../../../wall_ui/base_components/wall_elevated_button.dart';
 import '../../../wall_ui/base_components/wall_page_title.dart';
 import '../../../wall_ui/components/wall_app_bar/wall_app_bar.dart';
 import '../../../wall_ui/tokens/wall_colors.dart';
@@ -59,12 +60,13 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
             if (kIsWeb)
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
-                child: ElevatedButton(
-                    onPressed: () => Modular.to.pushNamed('/home/write/').then((_) {
-                          controller.getAll();
-                          controller.getPostsByUser();
-                        }),
-                    child: Text('Add new post'.toUpperCase())),
+                child: WallElevatedButton(
+                  onPressed: () => Modular.to.pushNamed('/home/write/').then((_) {
+                    controller.getAll();
+                    controller.getPostsByUser();
+                  }),
+                  label: 'Add new post',
+                ),
               ),
             Expanded(
               child: Column(

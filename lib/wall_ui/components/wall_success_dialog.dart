@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../base_components/wall_elevated_button.dart';
 
 class WallSuccessDialog extends StatelessWidget {
   final String title;
@@ -26,10 +27,7 @@ class WallSuccessDialog extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => Modular.to.pop(),
-              child: Text('ok'.toUpperCase()),
-            ),
+            WallElevatedButton(onPressed: () => Modular.to.pop(), label: 'ok'),
           ],
         ),
       ],

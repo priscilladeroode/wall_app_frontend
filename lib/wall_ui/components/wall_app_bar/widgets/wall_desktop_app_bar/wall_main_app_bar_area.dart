@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import '../../../../base_components/wall_elevated_button.dart';
 import '../../wall_app_bar_controller.dart';
 
 import '../wall_app_bar_logo.dart';
@@ -27,9 +28,8 @@ class WallMainAppBarArea extends StatelessWidget {
                         onPressed: () => Modular.to.pushNamed('/auth/signin'),
                         child: const Text('Sign In')),
                     const SizedBox(width: 16),
-                    ElevatedButton(
-                        onPressed: () => Modular.to.pushNamed('/auth/signup'),
-                        child: Text('Sign Up'.toUpperCase()))
+                    WallElevatedButton(
+                        onPressed: () => Modular.to.pushNamed('/auth/signup'), label: 'Sign Up')
                   ])
                 : ([
                     TextButton(
