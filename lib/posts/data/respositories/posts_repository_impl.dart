@@ -77,4 +77,23 @@ class PostsRepositoryImpl implements PostsRepository {
       return left(PostsRepositoryFailure());
     }
   }
+
+  @override
+  Future<Either<PostsFailures, bool>> deletePost(String id) async {
+    try {
+      final _result = await datasource.deletePost(id);
+      return right(_result);
+    } on DioError catch (e) {
+      switch (e.response?.data['errorCode']) {
+        case 'unauthorized':
+          return left(Unauthorized());
+        default:
+          return left(PostsRepositoryFailure());
+      }
+    } on PostsFailures catch (e) {
+      return left(e);
+    } catch (e) {
+      return left(PostsRepositoryFailure());
+    }
+  }
 }

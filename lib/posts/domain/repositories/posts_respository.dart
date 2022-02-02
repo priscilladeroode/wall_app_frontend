@@ -8,4 +8,5 @@ abstract class PostsRepository {
   Future<Either<PostsFailures, PostResponseEntity>> loadById(String id);
   Future<Either<PostsFailures, List<PostResponseEntity>>> loadByUser();
   Future<Either<PostsFailures, bool>> createPost(PostRequestEntity post);
+  Future<Either<PostsFailures, bool>> deletePost(String id);
 }
