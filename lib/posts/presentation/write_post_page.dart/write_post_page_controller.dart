@@ -31,10 +31,12 @@ class WritePostPageController {
   }
 
   Future<void> update(BuildContext context) async {
+    final content = store.content.text.replaceAll("\"", "'");
+    final title = store.title.text.replaceAll("\"", "'");
     final _result = await usecase(PostRequestEntity(
       id: store.id,
-      title: store.title.text,
-      content: store.content.text,
+      title: title,
+      content: content,
     ));
     _result.fold(
         (l) => store.setError = l.message,
@@ -47,9 +49,11 @@ class WritePostPageController {
   }
 
   Future<void> create(BuildContext context) async {
+    final content = store.content.text.replaceAll("\"", "'");
+    final title = store.title.text.replaceAll("\"", "'");
     final _result = await createUsecase(PostRequestEntity(
-      title: store.title.text,
-      content: store.content.text,
+      title: title,
+      content: content,
     ));
     _result.fold(
       (l) => store.setError = l.message,
