@@ -19,7 +19,12 @@ class WallMainAppBarArea extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const WallAppBarLogo(maxHeight: 36),
+        InkWell(
+          onTap: controller.authStore.accessToken == null
+              ? () => Modular.to.navigate('/home')
+              : () => Modular.to.navigate('/home/myHome'),
+          child: const WallAppBarLogo(maxHeight: 36),
+        ),
         Observer(builder: (context) {
           return Row(
             children: controller.authStore.accessToken == null
