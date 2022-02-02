@@ -81,12 +81,28 @@ class _WallPostCardState extends State<WallPostCard> {
                   ),
                 ),
                 const Spacer(),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                Row(
+                  children: [
+                    if (widget.owner)
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.delete_outline,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          const SizedBox(width: 16),
+                          Icon(
+                            Icons.edit_outlined,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ],
+                      ),
+                    const Spacer(),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ],
                 )
               ],
             ),
