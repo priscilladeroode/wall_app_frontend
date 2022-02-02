@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import '../../../../../commons/breakpoints.dart';
 
 import '../../../../../wall_ui/base_components/wall_elevated_button.dart';
 import '../../../../../wall_ui/components/wall_theme_mode_switch/wall_theme_mode_switch.dart';
@@ -19,10 +20,12 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends ModularState<SignInForm, SignInFormController> {
   late ThemeData theme;
+  late Breakpoint breakpoint;
   final _formKey = GlobalKey<FormState>();
   @override
   void didChangeDependencies() {
     theme = Theme.of(context);
+    breakpoint = Breakpoint.fromMediaQuery(context);
     super.didChangeDependencies();
   }
 
@@ -31,8 +34,11 @@ class _SignInFormState extends ModularState<SignInForm, SignInFormController> {
     return SingleChildScrollView(
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400),
-        width: MediaQuery.of(context).size.width,
-        child: SizedBox(
+        width: breakpoint.screenWidth,
+        child: Container(
+          padding: breakpoint.device == LayoutClass.desktop
+              ? null
+              : const EdgeInsets.symmetric(horizontal: 16),
           width: double.maxFinite,
           child: Form(
             key: _formKey,
