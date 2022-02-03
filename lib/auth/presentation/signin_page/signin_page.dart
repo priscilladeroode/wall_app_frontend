@@ -22,28 +22,31 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: WallAppBar(
-        breakpoint: breakpoint,
-        hideActions: true,
-      ),
-      body: SizedBox(
-        height: breakpoint.screenHeight,
-        width: breakpoint.device == LayoutClass.desktop
-            ? breakpoint.screenWidth * 0.75
-            : breakpoint.screenWidth,
-        child: Row(
-          mainAxisAlignment: breakpoint.device == LayoutClass.desktop
-              ? MainAxisAlignment.spaceBetween
-              : MainAxisAlignment.center,
-          children: [
-            if (breakpoint.device == LayoutClass.desktop)
-              AuthImageWidget(
-                breakpoint: breakpoint,
-                imagePath: 'assets/images/signin_image.png',
-              ),
-            const SignInForm(),
-          ],
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: WallAppBar(
+          breakpoint: breakpoint,
+          hideActions: true,
+        ),
+        body: SizedBox(
+          height: breakpoint.screenHeight,
+          width: breakpoint.device == LayoutClass.desktop
+              ? breakpoint.screenWidth * 0.75
+              : breakpoint.screenWidth,
+          child: Row(
+            mainAxisAlignment: breakpoint.device == LayoutClass.desktop
+                ? MainAxisAlignment.spaceBetween
+                : MainAxisAlignment.center,
+            children: [
+              if (breakpoint.device == LayoutClass.desktop)
+                AuthImageWidget(
+                  breakpoint: breakpoint,
+                  imagePath: 'assets/images/signin_image.png',
+                ),
+              const SignInForm(),
+            ],
+          ),
         ),
       ),
     );
