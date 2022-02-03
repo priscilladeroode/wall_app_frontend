@@ -22,10 +22,10 @@ class SignUpFormController {
     store.setError = '';
     final _result = await usecase(
       SignUpRequestEntity(
-        email: store.emailController.text,
+        email: store.emailController.text.trim().toLowerCase(),
         name: store.fullNameController.text.trim(),
-        password: store.passwordController.text.toLowerCase(),
-        passwordConfirmation: store.passwordConfirmationController.text,
+        password: store.passwordController.text.trim(),
+        passwordConfirmation: store.passwordConfirmationController.text.trim(),
       ),
     );
     _result.fold(

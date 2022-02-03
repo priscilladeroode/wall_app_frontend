@@ -23,8 +23,8 @@ class SignInFormController {
 
     final _result = await usecase(
       SignInRequestEntity(
-        email: store.emailController.text,
-        password: store.passwordController.text.toLowerCase(),
+        email: store.emailController.text.trim().toLowerCase(),
+        password: store.passwordController.text.trim(),
       ),
     );
     _result.fold(
