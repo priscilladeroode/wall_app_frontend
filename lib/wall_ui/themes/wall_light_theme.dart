@@ -48,6 +48,9 @@ final lightTheme = ThemeData(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
     ),
+    hintStyle: WallTypography.bodyLarge,
+    labelStyle: WallTypography.bodyLarge,
+    helperStyle: WallTypography.bodySmall,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: WallColors.primaryColor500,

@@ -57,6 +57,9 @@ final darkTheme = ThemeData(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
     ),
+    hintStyle: WallTypography.bodyLarge,
+    labelStyle: WallTypography.bodyLarge,
+    helperStyle: WallTypography.bodySmall,
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
