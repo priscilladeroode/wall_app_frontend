@@ -7,14 +7,13 @@ import '../../../../wall_ui/base_components/wall_page_title.dart';
 import '../../../domain/failures/posts_failures.dart';
 import 'post_form_store.dart';
 
-class PostForm extends StatelessWidget {
+class PostForm extends StatefulWidget {
   final String formTitle;
   final PostFormStore store;
-  final GlobalKey<FormState> postFormKey = GlobalKey<FormState>();
   final Function(BuildContext) onFormSend;
   final Breakpoint breakpoint;
 
-  PostForm({
+  const PostForm({
     Key? key,
     this.formTitle = 'Let\'s start!',
     required this.onFormSend,
@@ -23,25 +22,32 @@ class PostForm extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<PostForm> createState() => _PostFormState();
+}
+
+class _PostFormState extends State<PostForm> {
+  final GlobalKey<FormState> postFormKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       return Form(
         key: postFormKey,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
-          constraints: breakpoint.device == LayoutClass.mobile
+          constraints: widget.breakpoint.device == LayoutClass.mobile
               ? null
-              : BoxConstraints(maxWidth: breakpoint.screenWidth * 0.7),
+              : BoxConstraints(maxWidth: widget.breakpoint.screenWidth * 0.7),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               WallPageTitle(
-                title: formTitle,
-                device: breakpoint.device,
+                title: widget.formTitle,
+                device: widget.breakpoint.device,
               ),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: store.title,
+                controller: widget.store.title,
                 maxLength: 150,
                 decoration: const InputDecoration(
                   label: Text('Title'),
@@ -55,7 +61,7 @@ class PostForm extends StatelessWidget {
               const SizedBox(height: 16),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: store.content,
+                controller: widget.store.content,
                 minLines: 1,
                 maxLines: 15,
                 maxLength: 3000,
@@ -73,10 +79,10 @@ class PostForm extends StatelessWidget {
               Observer(builder: (context) {
                 return WallElevatedButton(
                   label: 'Save',
-                  loading: store.loading,
+                  loading: widget.store.loading,
                   onPressed: () {
                     if (postFormKey.currentState!.validate()) {
-                      onFormSend(context);
+                      widget.onFormSend(context);
                     }
                   },
                 );
