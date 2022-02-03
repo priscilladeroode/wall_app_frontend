@@ -8,11 +8,13 @@ class WallMobileAppBar extends StatelessWidget {
   final double width;
   final double height;
   final WallAppBarController controller;
+  final bool hideActions;
   const WallMobileAppBar({
     Key? key,
     required this.width,
     required this.height,
     required this.controller,
+    this.hideActions = false,
   }) : super(key: key);
 
   @override
@@ -24,18 +26,20 @@ class WallMobileAppBar extends StatelessWidget {
           width: width,
           child: const WallAppBarLogo(),
         ),
-        actions: controller.authStore.accessToken == null
-            ? ([
-                IconButton(
-                    onPressed: () => Modular.to.pushNamed('/auth/signin'),
-                    icon: const Icon(Icons.face))
-              ])
-            : ([
-                IconButton(
-                  onPressed: () => controller.signOut(),
-                  icon: const Icon(Icons.exit_to_app),
-                )
-              ]),
+        actions: hideActions
+            ? null
+            : controller.authStore.accessToken == null
+                ? ([
+                    IconButton(
+                        onPressed: () => Modular.to.pushNamed('/auth/signin'),
+                        icon: const Icon(Icons.face))
+                  ])
+                : ([
+                    IconButton(
+                      onPressed: () => controller.signOut(),
+                      icon: const Icon(Icons.exit_to_app),
+                    )
+                  ]),
       );
     });
   }

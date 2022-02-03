@@ -8,11 +8,13 @@ class WallDesktopAppBar extends StatelessWidget {
   final double width;
   final WallAppBarController controller;
   final double height;
+  final bool hideActions;
   const WallDesktopAppBar({
     Key? key,
     required this.width,
     required this.controller,
     required this.height,
+    this.hideActions = false,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,10 @@ class WallDesktopAppBar extends StatelessWidget {
       toolbarHeight: height,
       title: SizedBox(
         width: width,
-        child: WallMainAppBarArea(controller: controller),
+        child: WallMainAppBarArea(
+          controller: controller,
+          hideActions: hideActions,
+        ),
       ),
     );
   }

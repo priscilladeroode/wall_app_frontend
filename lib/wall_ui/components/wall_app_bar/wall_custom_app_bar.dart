@@ -26,7 +26,16 @@ class _WallCustomAppBarState extends ModularState<WallCustomAppBar, WallAppBarCo
   @override
   Widget build(BuildContext context) {
     return widget.desktop
-        ? WallDesktopAppBar(width: widget.width, controller: controller, height: widget.height)
-        : WallMobileAppBar(width: widget.width, height: widget.height, controller: controller);
+        ? WallDesktopAppBar(
+            width: widget.width,
+            controller: controller,
+            height: widget.height,
+            hideActions: widget.hideActions)
+        : WallMobileAppBar(
+            width: widget.width,
+            height: widget.height,
+            controller: controller,
+            hideActions: widget.hideActions,
+          );
   }
 }

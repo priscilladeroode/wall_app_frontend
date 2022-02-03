@@ -23,6 +23,7 @@ class WallAppBar extends StatelessWidget implements PreferredSizeWidget {
       height: _height,
       width: _width,
       desktop: _desktop,
+      hideActions: hideActions,
     );
   }
 

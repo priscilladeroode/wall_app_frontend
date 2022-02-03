@@ -23,7 +23,10 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: WallAppBar(breakpoint: breakpoint),
+      appBar: WallAppBar(
+        breakpoint: breakpoint,
+        hideActions: true,
+      ),
       body: SizedBox(
         height: breakpoint.screenHeight,
         width: breakpoint.device == LayoutClass.desktop

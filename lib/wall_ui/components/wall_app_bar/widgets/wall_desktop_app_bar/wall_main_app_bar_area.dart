@@ -8,10 +8,9 @@ import '../wall_app_bar_logo.dart';
 
 class WallMainAppBarArea extends StatelessWidget {
   final WallAppBarController controller;
-  const WallMainAppBarArea({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+  final bool hideActions;
+  const WallMainAppBarArea({Key? key, required this.controller, this.hideActions = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +24,25 @@ class WallMainAppBarArea extends StatelessWidget {
               : () => Modular.to.navigate('/home/myHome'),
           child: const WallAppBarLogo(maxHeight: 36),
         ),
-        Observer(builder: (context) {
-          return Row(
-            children: controller.authStore.accessToken == null
-                ? ([
-                    TextButton(
-                        onPressed: () => Modular.to.pushNamed('/auth/signin'),
-                        child: const Text('Sign In')),
-                    const SizedBox(width: 16),
-                    WallElevatedButton(
-                        onPressed: () => Modular.to.pushNamed('/auth/signup'), label: 'Sign Up')
-                  ])
-                : ([
-                    TextButton(
-                        onPressed: () => controller.signOut(), child: const Text('Sign out')),
-                  ]),
-          );
-        }),
+        const Spacer(),
+        if (!hideActions)
+          Observer(builder: (context) {
+            return Row(
+              children: controller.authStore.accessToken == null
+                  ? ([
+                      TextButton(
+                          onPressed: () => Modular.to.pushNamed('/auth/signin'),
+                          child: const Text('Sign In')),
+                      const SizedBox(width: 16),
+                      WallElevatedButton(
+                          onPressed: () => Modular.to.pushNamed('/auth/signup'), label: 'Sign Up')
+                    ])
+                  : ([
+                      TextButton(
+                          onPressed: () => controller.signOut(), child: const Text('Sign out')),
+                    ]),
+            );
+          }),
       ],
     );
   }
