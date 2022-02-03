@@ -42,6 +42,9 @@ final darkTheme = ThemeData(
       ),
     ),
   ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: WallColors.primaryColor400,
+  ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       minimumSize: const Size(40, 48),

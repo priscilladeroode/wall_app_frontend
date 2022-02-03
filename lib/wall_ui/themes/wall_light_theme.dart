@@ -49,6 +49,9 @@ final lightTheme = ThemeData(
       borderRadius: BorderRadius.circular(4),
     ),
   ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: WallColors.primaryColor500,
+  ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       padding: const EdgeInsets.symmetric(horizontal: 32),
