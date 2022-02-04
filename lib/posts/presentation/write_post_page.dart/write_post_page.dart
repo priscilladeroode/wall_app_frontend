@@ -32,24 +32,27 @@ class _WritePostPageState extends ModularState<WritePostPage, WritePostPageContr
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: WallAppBar(breakpoint: breakpoint),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: breakpoint.screenWidth,
-          height: breakpoint.screenHeight,
-          child: Center(
-            child: Column(
-              children: [
-                const WallThemeModeSwitch(),
-                PostForm(
-                  store: controller.store,
-                  onFormSend: (widget.id == null || widget.id!.isEmpty)
-                      ? controller.create
-                      : controller.update,
-                  breakpoint: breakpoint,
-                ),
-              ],
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: WallAppBar(breakpoint: breakpoint),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            width: breakpoint.screenWidth,
+            height: breakpoint.screenHeight,
+            child: Center(
+              child: Column(
+                children: [
+                  const WallThemeModeSwitch(),
+                  PostForm(
+                    store: controller.store,
+                    onFormSend: (widget.id == null || widget.id!.isEmpty)
+                        ? controller.create
+                        : controller.update,
+                    breakpoint: breakpoint,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
