@@ -143,7 +143,10 @@ class _LoggedHomePageState extends ModularState<LoggedHomePage, LoggedHomePageCo
                 controller.getAll();
                 controller.getPostsByUser();
               }),
-              child: const Icon(Icons.add),
+              child: const Icon(
+                Icons.add,
+                color: WallColors.neutral50,
+              ),
             )
           : null,
     );

@@ -72,7 +72,7 @@ class _BubbleFloatingState extends State<BubbleFloating> with SingleTickerProvid
           ? _animationController.reverse()
           : _animationController.forward(),
       iconColor: WallColors.neutral50,
-      iconData: _animationController.isCompleted ? Icons.remove : Icons.add,
+      iconData: _animationController.isCompleted ? Icons.remove : Icons.reorder,
       backGroundColor: theme.primaryColor,
     );
   }
