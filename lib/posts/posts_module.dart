@@ -29,7 +29,7 @@ class PostsModule extends Module {
   @override
   List<Bind> get binds => [
         Bind.factory((i) => PostFormStore()),
-        Bind.factory((i) => WritePostPageController(i(), i(), i(), i())),
+        Bind.factory((i) => WritePostPageController(i(), i(), i(), i(), i(), i())),
         Bind.factory((i) => UpdatePostUseCaseImpl(i())),
         Bind.factory((i) => DeletePostUseCaseImpl(i())),
         Bind.factory((i) => CreatePostUseCaseImpl(i())),
@@ -38,8 +38,12 @@ class PostsModule extends Module {
         Bind.factory((i) => LoggedHomePageController(
             getAllPostsUsecase: i(), store: i(), authStore: i(), getPostsByUserUsecase: i())),
         Bind.factory<PostDetailsPageStore>((i) => PostDetailsPageStore()),
-        Bind.factory<PostDetailsPageController>(
-            (i) => PostDetailsPageController(store: i(), usecase: i(), deletePostUseCase: i())),
+        Bind.factory<PostDetailsPageController>((i) => PostDetailsPageController(
+            store: i(),
+            usecase: i(),
+            deletePostUseCase: i(),
+            clearUserUseCase: i(),
+            authStore: i())),
         Bind.factory<GetPostById>((i) => GetPostByIdImpl(i())),
         Bind.factory<HomePageStore>((i) => HomePageStore()),
         Bind.factory<HomePageController>((i) => HomePageController(usecase: i(), store: i())),

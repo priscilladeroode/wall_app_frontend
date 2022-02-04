@@ -49,6 +49,13 @@ class PostsRepositoryImpl implements PostsRepository {
     try {
       final result = await datasource.loadByUid();
       return right(mapper.fromModelList(result));
+    } on DioError catch (e) {
+      switch (e.response?.data['errorCode']) {
+        case 'access_denied':
+          return left(AccessDenied());
+        default:
+          return left(PostsRepositoryFailure());
+      }
     } on PostsFailures catch (e) {
       return left(e);
     } catch (_) {
@@ -64,6 +71,8 @@ class PostsRepositoryImpl implements PostsRepository {
       return right(_result);
     } on DioError catch (e) {
       switch (e.response?.data['errorCode']) {
+        case 'access_denied':
+          return left(AccessDenied());
         case 'length_error_title':
           return left(InvalidTitleLength());
         case 'length_error_content':
@@ -85,6 +94,8 @@ class PostsRepositoryImpl implements PostsRepository {
       return right(_result);
     } on DioError catch (e) {
       switch (e.response?.data['errorCode']) {
+        case 'access_denied':
+          return left(AccessDenied());
         case 'unauthorized':
           return left(Unauthorized());
         default:
@@ -111,6 +122,8 @@ class PostsRepositoryImpl implements PostsRepository {
           return left(InvalidContentLength());
         case 'unauthorized':
           return left(Unauthorized());
+        case 'access_denied':
+          return left(AccessDenied());
         default:
           return left(PostsRepositoryFailure());
       }

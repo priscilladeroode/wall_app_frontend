@@ -26,3 +26,8 @@ class Unauthorized extends PostsFailures {
   @override
   String get message => 'It seems like you are not the owner of this post.';
 }
+
+class AccessDenied extends PostsFailures {
+  @override
+  String get message => 'Your access expired. Sign in and try again.';
+}

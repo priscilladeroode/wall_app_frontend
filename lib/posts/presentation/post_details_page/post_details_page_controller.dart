@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../wall_ui/components/wall_success_dialog.dart';
-import '../../domain/usecases/delete_post_usecase.dart';
+import '../../../auth/presentation/stores/auth_store.dart';
+import '../../../commons/local_storage/domain/usecases/clear_user_usecase.dart';
 
+import '../../../wall_ui/components/wall_success_dialog.dart';
+import '../../domain/failures/posts_failures.dart';
+import '../../domain/usecases/delete_post_usecase.dart';
 import '../../domain/usecases/get_post_by_id.dart';
 import 'stores/post_details_page_store.dart';
 
@@ -10,12 +13,15 @@ class PostDetailsPageController {
   final PostDetailsPageStore store;
   final GetPostById usecase;
   final DeletePostUseCase deletePostUseCase;
+  final ClearUserUseCase clearUserUseCase;
+  final AuthStore authStore;
 
-  PostDetailsPageController({
-    required this.store,
-    required this.usecase,
-    required this.deletePostUseCase,
-  });
+  PostDetailsPageController(
+      {required this.store,
+      required this.usecase,
+      required this.deletePostUseCase,
+      required this.clearUserUseCase,
+      required this.authStore});
 
   Future<void> getPost(String id) async {
     store.setLoading = true;
@@ -31,7 +37,12 @@ class PostDetailsPageController {
     store.setLoading = true;
     final result = await deletePostUseCase(store.post!.id);
     result.fold(
-      (l) => store.setError = l.message,
+      (l) {
+        store.setError = l.message;
+        if (l is AccessDenied) {
+          signOut();
+        }
+      },
       (r) {
         showDialog(
                 context: context,
@@ -41,5 +52,13 @@ class PostDetailsPageController {
       },
     );
     store.setLoading = false;
+  }
+
+  void signOut() async {
+    await clearUserUseCase();
+    Modular.to.navigate('/home/');
+    authStore.setName = null;
+    authStore.setEmail = null;
+    authStore.setAccessToken = null;
   }
 }
