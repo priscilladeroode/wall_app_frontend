@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:wall_app_frontend/auth/presentation/stores/auth_store.dart';
 import 'package:wall_app_frontend/commons/either.dart';
+import 'package:wall_app_frontend/commons/local_storage/domain/usecases/clear_user_usecase.dart';
 import 'package:wall_app_frontend/posts/domain/failures/posts_failures.dart';
 import 'package:wall_app_frontend/posts/domain/usecases/delete_post_usecase.dart';
 import 'package:wall_app_frontend/posts/domain/usecases/get_post_by_id.dart';
@@ -15,18 +17,31 @@ class GetPostByIdUseCaseMock extends Mock implements GetPostById {}
 
 class DeletePostUseCaseMock extends Mock implements DeletePostUseCase {}
 
+class ClearUserUseCaseMock extends Mock implements ClearUserUseCase {}
+
+class AuthStoreMock extends Mock implements AuthStore {}
+
 void main() {
   late PostDetailsPageStore _store;
   late GetPostById _usecase;
   late PostDetailsPageController _controller;
   late DeletePostUseCase _deletePostUseCase;
+  late ClearUserUseCase _clearUserUseCase;
+  late AuthStore _authStore;
 
   setUpAll(() {
     _store = PostDetailsPageStoreMock();
     _usecase = GetPostByIdUseCaseMock();
     _deletePostUseCase = DeletePostUseCaseMock();
+    _clearUserUseCase = ClearUserUseCaseMock();
+    _authStore = AuthStoreMock();
     _controller = PostDetailsPageController(
-        usecase: _usecase, store: _store, deletePostUseCase: _deletePostUseCase);
+      usecase: _usecase,
+      store: _store,
+      deletePostUseCase: _deletePostUseCase,
+      clearUserUseCase: _clearUserUseCase,
+      authStore: _authStore,
+    );
   });
   test('''
     Given a valid call to method getPost,
